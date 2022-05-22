@@ -1,0 +1,120 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Checkpoint Facility</title>
+</head>
+<body>
+<h1>Checkpoint Facility</h1>
+	<p>
+		A "checkpoint" is a collection of state data
+		that can be saved and restored.
+	</p>
+	<h2>Encapsulated Data</h2>
+		<ol>
+		<li>
+			GridMap:<br/>
+			This is the map that tracks the state
+			of all cells in the grid.
+			It also contains a flag that is set
+			every time the grid is modified (see <em>isModified</em>)
+			and can be reset by the user (see <em>resetModified</em>).
+			<br/>
+			TODO:
+			"modified" logic needs to be modified.
+			There needs to be a single place
+			to flag "needs to be saved" state,
+			that includes the GridMap, the rules,
+			the upper-left corner, comments, pattern properties, etc.
+			Probably put this in the Parameters class;
+			changes to crucial properties 
+			can automatically set this flag.
+		</li>
+		<li>
+			Pattern properties, including:
+			<ul>
+				<li>Pattern name</li>
+				<li>Author name</li>
+				<li>Author email</li>
+				<li>Author date</li>
+				<li>Pattern filename</li>
+				<li>Upper-left corner</li>
+				<li>Rules</li>
+			</ul>
+			The above may not be a complete list
+			of properties that need to be tracked.
+		</li>
+		<li>The state of the checkpoint stack</li>
+		</ol>
+	<h2>Data NOT Encapsulated</h2>
+		<ul>
+			<li>Grid color</li>
+			<li>Cell color</li>
+			<li>Grid line color</li>
+			<li>Grid line width</li>
+			<li>Cell size</li>
+			<li>"Show Grid"</li>
+			<li>"Keep Grid Centered"</li>
+			<li>URL</li>
+		</ul>
+	<h2>Baseline Checkpoint</h2>
+		<p>
+			This is the checkpoint that represents
+			the earliest state of the pattern data.
+		</p>
+	<h2>Checkpoint Stack</h2>
+		<p>
+			This is a stack of checkpoints
+			under the control of the application operator.
+			The stack is "one-way" only;
+			after a checkpoint has been popped off the stack
+			it is unrecoverable.
+		</p>
+		<h3>Operations</h3>
+		<ul>
+			<li>
+				Push:
+				This operation pushes a checkpoint onto the stack
+			</li>
+			<li>
+				Pop:
+				This operation removes a checkpoint from the stack.
+				Typically the pattern state will be restored
+				from the checkpoint,
+				but that is under the control of the programmer.
+			</li>
+			<li>
+				Peek:
+				This operation returns the most recently pushed checkpoint
+				without removing it from the stack.
+				Typically the pattern state will be restored
+				from the checkpoint,
+				but that is under the control of the programmer.
+			</li>
+			<li>
+				Rewind:
+				Clears the stack
+				and returns the baseline checkpoint.
+				Typically the pattern state will be restored
+				from the checkpoint,
+				but that is under the control of the programmer.
+			<li>
+				Clear:
+				Equivalent to <em>Rewind.</em>
+			</li>
+			<li>
+				Check state (<em>is-empty</em>):
+				Returns a boolean indicating
+				whether the stack is populated.
+			</li>
+			<li>
+				(TODO: 
+				need a "reset baseline" operation?
+				Set the baseline checkpoint 
+				to the most recently pushed checkpoint,
+				and clear the stack.)
+			</li>
+		</ul>
+</body>
+</html>

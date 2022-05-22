@@ -1,0 +1,56 @@
+
+<!DOCTYPE html>
+<!-- TODO cross-reference this doc with the component interface doc -->
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Component State Detail</title>
+</head>
+<body>
+<h1>Component State Detail</h1>
+	<p>
+		This is a description on component availability
+		under different application states.
+		For example, 
+		after creating a new pattern,
+		the menu <em>Save-As</em> button must be available,
+		but the <em>Save</em> button must not.
+		The <em>Rewind</em> button must be available
+		except when the <em>Animation</em> toggle button is set.
+		A tentative description
+		of toolbar button states is included
+		even though the toolbar has not yet been designed.
+	</p>
+	<h2>Generator Panel</h2>
+		<ol>
+		<li>
+			Next Generation Button<br/>
+			<ol type="a">
+			<li>Not available when animation is in progress</li>
+			<li>Available whenever animation is not in progress</li>
+			</ol>
+		</li>
+		<li>
+			Rewind Button<br/>
+			Available <em>except</em> when pattern is in base state.
+			Specifically:
+			<ol type="a">
+			<li>Not available immediately after open</li>
+			<li>Not available immediately after new</li>
+			<li>Not available immediately after rewind</li>
+			<li>Available when animation in progress</li>
+			<li>No state change after save/save-as</li>
+			<li>No state change after operator cell selection</li>
+			</ol>
+		</li>
+		<li>
+			Generation per Second Slider:<br/>
+			Always available.
+		</li>
+		<li>
+			Animate Toggle Button:<br/>
+			Always available.
+		</li>
+		</ol>
+</body>
+</html>

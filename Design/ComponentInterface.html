@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<!-- TODO cross-reference this doc with the component state doc -->
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Component Interface Facility/Standards</title>
+</head>
+<body>
+<h1> Purpose</h1>
+<p>
+	This document describes the means by which
+	an application can affect the state
+	of GUI components.
+	This includes, for example,
+	the way in which an application can enable or disable
+	various components such as the "next generation" button.
+	(Note: at this time
+	only the <em>enabled</em>) property of components
+	can be controlled.
+	However there is no reason why
+	this facility cannot be extended
+	to other GUI component properties.)
+</p>
+<h2>Constants</h2>
+<p>
+	Each property that can be controlled 
+	through this facility
+	has a name declared in the GOLContants class.
+	The name begins by declaring the component being controlled
+	(e.g. <em>NEXT_GENERATION</em>)
+	followed by the property being controlled
+	(e.g. <em>ENABLED</em>)
+	followed by either <em>PN</em>
+	(for property-name)
+	or <em>DV</em>
+	(for default value).
+</p>
+<p>
+	Examples:
+</p>
+<pre>	/** "Enabled" property of component to spawn next generation */
+	public static final String NEXT_GENERATION_ENABLED_PN = "nextGenerationEnabled";
+	/** "Enabled" property of next-generation feature default value */
+	public static final String NEXT_GENERATION_ENABLED_DV = "true";</pre>
+<p>
+	Property name should avoid identifying component types
+	since component types for a particular feature
+	could change in the future, for example:
+</p>
+<p style="margin-left: 3em;">
+	FEATURE_ENABLED_PN, not 
+	<span style="text-decoration: line-through;">
+		FEATURE_TOGGLE_BUTTON_ENABLED
+	</span>.
+</p>
+<h1>Properties</h1>
+<p>
+	The ACProperties class will provide an initial value
+	for each Component property
+	according to the established hierarchy
+	of sources for initial values 
+	(command line, environment variable, property file, etc.).
+	The ACProperties class is <em>not</em> responsible
+	for maintaining the current value of a property,
+	or for detecting the state of a GUI component
+	with respect to that property.
+</p>
+<h1>Parameters</h1>
+<p>
+	The Parameters class is responsible
+	for maintaining the current state
+	of each property.
+	Initial value of a property
+	is obtained from the ACProperties class.
+	The ACProperties class is <em>not</em> responsible
+	for detecting the physical state of a property.
+</p>
+<p>
+	The Parameters class
+	will have <em>get</em> and <em>set</em> accessors
+	for each property.
+	Calls to the <em>set</em> accessor
+	will generate a property-change event
+	for the associated property.
+	Application facilities can register
+	for property-change notification
+	by invoking one of the Parameters class's
+	<em>addPropertyChangeListener</em> methods.
+	<strong>
+		Note that property changes are not vetoable.
+	</strong>
+</p>
+<h1>GUI Components</h1>
+<p>
+	Guidelines for maintaining properties
+	subject to control 
+	via the Parameters class facilities:
+</p>
+<ul>
+	<li>
+		Components should configure the state
+		of such properties
+		by interrogating the Parameters class
+		at time of instantiation
+		(i.e., the state of a property
+		should not be hard-coded.)
+	</li>
+	<li>
+		When a state change for a component
+		precipitates changes to other components
+		such changes should be affected
+		via the Parameters class.
+	</li>
+	<li>
+		Components should honor state changes
+		generated via the Parameters class.
+		It is the application programmer's responsibility
+		to ensure that state changes
+		are appropriate and consistent.
+	</li>
+</ul>
+</body>
+</html>
