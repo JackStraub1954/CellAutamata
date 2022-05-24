@@ -96,7 +96,7 @@ public enum Parameters
      */
     private List<Integer>       birthStates;
     /** The latest data used to populate the grid */
-//    private RLEInput            gridLatestData;
+    private RLEInput            gridLatestData;
     
     /** Name of pattern being documented/displayed */
     private String              patternName;
@@ -231,7 +231,7 @@ public enum Parameters
     {
         gridCellOrigin = props.getGridCellOrigin();
         gridURL = props.getGridURL();
-//        gridLatestData = props.getGridLatestData();
+        gridLatestData = props.getGridLatestData();
 
         survivalStates = props.getSurvivalStates();
         birthStates = props.getBirthStates();        
@@ -921,10 +921,10 @@ public enum Parameters
      * @return  an object representing the latest data used to
      *          populate the grid
      */
-//    public RLEInput getGridLatestData()
-//    {
-//        return gridLatestData;
-//    }
+    public RLEInput getGridLatestData()
+    {
+        return gridLatestData;
+    }
     
     /**
      * Sets a value indicating the latest data used
@@ -934,15 +934,15 @@ public enum Parameters
      * 
      * @param keepCentered
      */
-//    public void setGridLatestData( RLEInput input )
-//    {
-//        Object  oldValue    = gridLatestData;
-//        Object  newValue    = input;
-//        String  propName    = CTRL_GRID_LATEST_PN;
-//        gridLatestData = input;
-//        propChangeSupport.
-//            firePropertyChange( propName, oldValue, newValue );
-//    }
+    public void setGridLatestData( RLEInput input )
+    {
+        Object  oldValue    = gridLatestData;
+        Object  newValue    = input;
+        String  propName    = CTRL_GRID_LATEST_PN;
+        gridLatestData = input;
+        propChangeSupport.
+            firePropertyChange( propName, oldValue, newValue );
+    }
     
     /**
      * Gets the name of the pattern being displayed/documented.

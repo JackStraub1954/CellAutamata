@@ -10,6 +10,8 @@ import static com.gmail.johnstraub1954.cell_automata.main.CAConstants.AUTO_REGEN
 import static com.gmail.johnstraub1954.cell_automata.main.CAConstants.AUTO_REGEN_PACE_PN;
 import static com.gmail.johnstraub1954.cell_automata.main.CAConstants.CTRL_BIRTH_STATES_DV;
 import static com.gmail.johnstraub1954.cell_automata.main.CAConstants.CTRL_BIRTH_STATES_PN;
+import static com.gmail.johnstraub1954.cell_automata.main.CAConstants.CTRL_GRID_LATEST_DV;
+import static com.gmail.johnstraub1954.cell_automata.main.CAConstants.CTRL_GRID_LATEST_PN;
 import static com.gmail.johnstraub1954.cell_automata.main.CAConstants.CTRL_GRID_URL_DV;
 import static com.gmail.johnstraub1954.cell_automata.main.CAConstants.CTRL_GRID_URL_PN;
 import static com.gmail.johnstraub1954.cell_automata.main.CAConstants.CTRL_SURVIVAL_STATES_DV;
@@ -357,12 +359,12 @@ public class ACProperties extends Properties
      * 
      * @return  the most recent data used to populate the grid
      */
-//    public RLEInput getGridLatestData()
-//    {
-//        RLEInput    input   = 
-//            (RLEInput)getObject( CTRL_GRID_LATEST_PN, CTRL_GRID_LATEST_DV );
-//        return input;
-//    }
+    public RLEInput getGridLatestData()
+    {
+        RLEInput    input   = 
+            (RLEInput)getObject( CTRL_GRID_LATEST_PN, CTRL_GRID_LATEST_DV );
+        return input;
+    }
     
     /**
      * Gets the name of the pattern being documented/displayed.
