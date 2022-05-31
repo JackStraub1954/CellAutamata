@@ -1254,7 +1254,7 @@ public enum Parameters
      */
     public void centerGrid()
     {
-        fireNotificationEvent( CAConstants.ACTION_CENTER_GRID_PN );
+        fireNotificationEvent( CAConstants.GC_CENTER_GRID );
         reset();
     }
     

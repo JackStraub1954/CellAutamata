@@ -773,7 +773,7 @@ class ParametersTest
     public void testAddNotificationListenerStringNotificationListener() 
     {
         String  notificationProperty1   = CAConstants.GRID_CELL_CLICKED_PN;
-        String  notificationProperty2   = CAConstants.ACTION_CENTER_GRID_PN;
+        String  notificationProperty2   = CAConstants.GC_CENTER_GRID;
         
         // listener1 should receive notifications
         // ONLY for notificationProperty1
@@ -819,7 +819,7 @@ class ParametersTest
     @Test
     public void testCenterGrid()
     {
-        String              name    = CAConstants.ACTION_CENTER_GRID_PN;
+        String              name    = CAConstants.GC_CENTER_GRID;
         NotificationTester  tester  = new NotificationTester( name );
         params.addNotificationListener( name, tester );
         params.centerGrid();

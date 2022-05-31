@@ -177,6 +177,63 @@ public class CAConstants
     
     ////////////////////////////////////////
     //
+    // GRID CONTOLS
+    // Actions/properties linked to GUI controls.
+    //
+    ////////////////////////////////////////
+    
+    /** The next-generation feature has been invoked. */
+    public static final String  GC_NEXT_GENERATION_FN   = "nextGeneration";
+    /** The rewind feature has been invoked. */
+    public static final String  GC_REWIND_FN            = "rewind";
+    /** The center-grid feature has been invoked. */
+    public static final String  GC_CENTER_GRID          = "centerGrid";
+    /** The push-checkpoint feature has been invoked. */
+    public static final String  GC_CHECKPOINT_PUSH_FN   = "checkpointPush";
+    /** The pop-checkpoint feature has been invoked. */
+    public static final String  GC_CHECKPOINT_POP_FN    = "checkpointPop";
+    /** The open-URL feature has been invoked. */
+    public static final String  GC_OPEN_URL_FN          = "openURL";
+    /** The select-file feature has been invoked. */
+    public static final String  GC_SELECT_FILE_FN       = "selectFile";
+    
+    /** The generations-per-second property value has changed. */
+    public static final String  GC_GEN_PER_SEC_COUNT_PN = "genPerSecond";
+    /** The generations-per-second property default value. */
+    public static final String  GC_GEN_PER_SEC_COUNT_DV = "4.0";
+    /** Animation has been enabled or disabled. */
+    public static final String  GC_ANIMATE_PN           = "animate";
+    /** Animation enabled default value. */
+    public static final String  GC_ANIMATE_DV           = "false";
+    /** Grid cell size property name. */
+    public static final String  GC_CELL_SIZE_PN         = "cellSize";
+    /** Cell size default value. */
+    public static final String  GC_CELL_SIZE_DV         = "4";
+    /** The show-grid property name. */
+    public static final String  GC_SHOW_GRID_PN         = "showGrid";
+    /** Show-grid property default value. */
+    public static final String  GC_SHOW_GRID_DV         = "true";
+    /**
+     *  Grid-on-top property property.
+     *  TODO: still to be implemented
+     */
+    public static final String  GC_GRID_ON_TOP_PN       = "gridOnTop";
+    /**
+     *  Grid-on-top property default value.
+     *  TODO: still to be implemented
+     */
+    public static final String  GC_GRID_ON_TOP_DV       = "true";
+    /** The keep-grid-centered property name. */
+    public static final String  GC_GRID_CENTERED_PN     = "gridOnTop";
+    /** The keep-grid-centered default value. */
+    public static final String  GC_GRID_CENTERED_DV     = "false";
+    /** The URL-to-open property name. */
+    public static final String  GC_URL_TO_OPEN_PN       = "urlToOpen";
+    /** The URL-to-open property default value. */
+    public static final String  GC_URL_TO_OPEN_DV       = "urlToOpen";
+    
+    ////////////////////////////////////////
+    //
     // PROPAGATION PROPERTIES
     //
     ////////////////////////////////////////
@@ -265,11 +322,6 @@ public class CAConstants
     
     /** Property associated with firing a reset action.*/
     public static final String  ACTION_RESET_PN         = "reset";
-    /** 
-     * Property associated with firing an action
-     * indicating that the grid should be centered.
-     */
-    public static final String  ACTION_CENTER_GRID_PN   = "centerGrid";
     /** Property associated with firing an "apply" action.*/
     public static final String  ACTION_APPLY_PN         = "apply";
     /** Property associated with firing a "cancel" action.*/

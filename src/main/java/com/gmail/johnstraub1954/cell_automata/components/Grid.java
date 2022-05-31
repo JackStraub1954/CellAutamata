@@ -1,6 +1,6 @@
 package com.gmail.johnstraub1954.cell_automata.components;
 
-import static com.gmail.johnstraub1954.cell_automata.main.CAConstants.ACTION_CENTER_GRID_PN;
+import static com.gmail.johnstraub1954.cell_automata.main.CAConstants.GC_CENTER_GRID;
 import static com.gmail.johnstraub1954.cell_automata.main.CAConstants.ACTION_RESET_PN;
 import static com.gmail.johnstraub1954.cell_automata.main.CAConstants.GRID_CELL_COLOR_PN;
 import static com.gmail.johnstraub1954.cell_automata.main.CAConstants.GRID_CELL_ORIGIN_PN;
@@ -81,7 +81,7 @@ public class Grid extends JPanel implements PropertyChangeListener
         params.addPropertyChangeListener( this );
         params.addNotificationListener( ACTION_RESET_PN, e -> repaint() );
         params.addNotificationListener(
-            ACTION_CENTER_GRID_PN, e -> centerGrid() );
+            GC_CENTER_GRID, e -> centerGrid() );
         this.addMouseListener( new MouseMonitor() );
     }
 
