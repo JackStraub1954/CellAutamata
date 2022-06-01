@@ -13,7 +13,7 @@ import java.awt.geom.Path2D;
  * @author Jack Straub
  *
  */
-public class HexTile
+public class HexTile2
 {
     private static final float  hexAngle    = (float)(2 * Math.PI / 6);
     
@@ -24,7 +24,7 @@ public class HexTile
     private final float     xTranslate;
     private final float     radius;
     
-    public HexTile( float radius )
+    public HexTile2( float radius )
     {
         this.radius = radius;
         

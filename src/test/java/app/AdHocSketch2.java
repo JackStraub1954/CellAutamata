@@ -8,17 +8,18 @@ import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Path2D;
+import java.awt.geom.Path2D.Float;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-public class AdHocSketch
+public class AdHocSketch2
 {
 
     public static void main(String[] args)
     {
-        AdHocSketch    hexagons    = new AdHocSketch();
+        AdHocSketch2    hexagons    = new AdHocSketch2();
         SwingUtilities.invokeLater( () -> hexagons.buildGUI() );
 
     }
@@ -33,8 +34,25 @@ public class AdHocSketch
     }
     
     @SuppressWarnings("serial")
-    private class Canvas extends JPanel
+    private static class Canvas extends JPanel
     {
+        private static final float      triAngle        = (float)(Math.PI / 3);
+        private static final float[]    evenVertices    = new float[3];
+        private static final float[]    oddVertices     = new float[3];
+        
+        static
+        {
+            double  delta   = 3 * Math.PI / 2; // 270 degrees
+            double  inverse = Math.PI; // 180 degrees
+//            double  vertex = -Math.PI;  // -90 degrees
+            for ( int inx = 0 ; inx < 2 ; ++inx )
+            {
+                double  vertex  = -Math.PI + inx * delta;
+                evenVertices[inx] = (float)vertex;
+                oddVertices[inx] = -(float)vertex;
+                System.out.println( vertex + ", " + -vertex );
+            }
+        }
         public Canvas()
         {
             super( null );
@@ -56,30 +74,12 @@ public class AdHocSketch
             gtx.fillRect( 0, 0, width, height );
             gtx.setColor( Color.BLACK );
             
-            float   radius  = 25;
-            float   dim     = 2 * radius;
-            float   centerX = radius;
-            float   centerY = radius;
-            Shape   circle  = new Ellipse2D.Float( 0, 0, dim, dim );
-            gtx.draw( circle );
+            Path2D  path1   = new Path2D.Float();
+            Path2D  path2   = new Path2D.Float();
             
-            Path2D  path    = new Path2D.Float();
-            float   delta   = (float)(2 * Math.PI / 3);
-            float   start   = -(float)(Math.PI / 2);
-            float   xco     = centerX + radius * (float)Math.cos( start );
-            float   yco     = centerY + radius * (float)Math.sin( start );
-            path.moveTo( xco, yco );
-            System.out.println( xco + ", " + yco );
+//            path1.moveTo( evenVertices, height);
             
-            for ( int inx = 1 ; inx < 3 ; ++inx )
-            {
-                xco = centerX + radius * (float)Math.cos( start + inx * delta );
-                yco = centerY + radius * (float)Math.sin( start + inx * delta );
-                path.lineTo(xco, yco);
-                System.out.println( xco + ", " + yco );
-            }
-            path.closePath();
-            gtx.draw( path );
+//            gtx.draw( path );
         }
     }
 }
