@@ -4,15 +4,15 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Point;
 import java.awt.RenderingHints;
-import java.awt.geom.AffineTransform;
+import java.awt.geom.Path2D;
+import java.awt.geom.Path2D.Double;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-import com.gmail.johnstraub1954.cell_automata.main.TriTile;
+import com.gmail.johnstraub1954.cell_automata.main.Polygon;
 
 public class Triangles
 {
@@ -36,13 +36,10 @@ public class Triangles
     @SuppressWarnings("serial")
     private class Canvas extends JPanel
     {
-        private final float     radius      = 20;
-        private final TriTile   triangle    = new TriTile( radius );
-        private final float     yTranslate  = triangle.yTranslate();
-        private final float     xTranslate  = triangle.xTranslate();
-        
-        private final double    evenRowXOffset = triangle.getEvenRowOffset();
-        private final double    oddRowXOffset  = triangle.getOddRowOffset();
+        private final double    triSide     = 60;
+        private final double    triRadius   = triSide / 2;
+        private final double    triHeight   = 
+            triSide * Math.sin( Math.PI / 3 );
 
         public Canvas()
         {
@@ -63,22 +60,48 @@ public class Triangles
             int         height  = getHeight();
             gtx.setColor( Color.CYAN );
             gtx.fillRect( 0, 0, width, height );
-            
-            AffineTransform saveAT  = gtx.getTransform();
             gtx.setColor( Color.BLACK );
-            for ( int row = 0 ; row < 1 ; ++row )
+            
+            for ( int row = 0 ; row < 10 ; ++row )
             {
-                gtx.setTransform( saveAT );
-                double  rowTransX   = 
-                    row % 2 == 0 ? evenRowXOffset  : oddRowXOffset;
-                double  rowTransY   = row * yTranslate;
-                gtx.translate( rowTransX, rowTransY );
-                for ( int col = 0 ; col < 1 ; ++col )
+                double  topYco      = row * triHeight;
+                double  bottomYco   = topYco + triHeight;
+                for ( int col = 0 ; col < 100 ; ++col )
                 {
-                    triangle.draw( gtx, new Point( col, row ) );
-                    gtx.translate( xTranslate, 0 );
+                    // create a square that will be divided into two triangles
+                    // the square in col zero will be half-off the grid
+                    final double    centerXco   = col * triRadius;
+                    final double    leftXco     = centerXco - triRadius;
+                    final double    rightXco    = centerXco + triRadius;
+                    
+                    Path2D  path        = new Path2D.Double();
+                    if ( isDown( row, col ) )
+                    {
+                        // "down" triangle
+                        path.moveTo( centerXco, bottomYco );
+                        path.lineTo( leftXco,  topYco );
+                        path.lineTo( rightXco, topYco );
+                        path.closePath();
+                        gtx.setColor( Color.RED );
+                        gtx.fill( path );
+                    }
+                    else
+                    {
+                        // "up" triangle
+                        path.moveTo( centerXco, topYco );
+                        path.lineTo( leftXco, bottomYco );
+                        path.lineTo( rightXco, bottomYco );
+                        gtx.setColor( Color.BLACK );
+                        gtx.draw( path );
+                    }
                 }
             }
+        }
+        
+        private boolean isDown( int row, int col )
+        {
+            boolean fill    = (row %2 == col % 2);
+            return fill;
         }
     }
 }

@@ -15,59 +15,59 @@ import java.awt.geom.Path2D;
  */
 public class HexTile
 {
-    private static final float  hexAngle    = (float)(2 * Math.PI / 6);
+    private static final double  hexAngle    = (double)(2 * Math.PI / 6);
     
-    private final float     apothem;
+    private final double     apothem;
     private final Path2D    path;
-    private final float     side;
-    private final float     yTranslate;
-    private final float     xTranslate;
-    private final float     radius;
+    private final double     side;
+    private final double     yTranslate;
+    private final double     xTranslate;
+    private final double     radius;
     
-    public HexTile( float radius )
+    public HexTile( double radius )
     {
         this.radius = radius;
         
         path = new Path2D.Float();
-        apothem = (float)(radius * Math.cos( Math.PI / 6 )); 
-        side = (float)(2 * radius * Math.sin( Math.PI / 6 ));
+        apothem = (double)(radius * Math.cos( Math.PI / 6 )); 
+        side = (double)(2 * radius * Math.sin( Math.PI / 6 ));
         
         xTranslate = 2 * apothem;
-        yTranslate = (float)(2 * side - side * Math.cos( hexAngle ) );
+        yTranslate = (double)(2 * side - side * Math.cos( hexAngle ) );
 
-        float   start   = (float)(Math.PI / 2);
-        float   centerX = radius;
-        float   centerY = radius;
-        float   xco     = centerX + radius * (float)Math.cos( start );
-        float   yco     = centerY + radius * (float)Math.sin( start );
+        double   start   = (double)(Math.PI / 2);
+        double   centerX = radius;
+        double   centerY = radius;
+        double   xco     = centerX + radius * (double)Math.cos( start );
+        double   yco     = centerY + radius * (double)Math.sin( start );
         System.out.println( xco + "," + yco );
         path.moveTo( xco, yco);
         for (int inx = 1; inx < 6 ; inx++ )
         {
-            xco = centerX + radius * (float)Math.cos( start + inx * hexAngle );
-            yco = centerY + radius * (float)Math.sin( start + inx * hexAngle );
+            xco = centerX + radius * (double)Math.cos( start + inx * hexAngle );
+            yco = centerY + radius * (double)Math.sin( start + inx * hexAngle );
             path.lineTo( xco, yco );
             System.out.println( "(" + xco + "," + yco + ")    " );
         }
         path.closePath();
     }
     
-    public float apothem()
+    public double apothem()
     {
         return apothem;
     }
     
-    public float side()
+    public double side()
     {
         return side;
     }
     
-    public float xTranslate()
+    public double xTranslate()
     {
         return xTranslate;
     }
     
-    public float yTranslate()
+    public double yTranslate()
     {
         return yTranslate;
     }
@@ -77,12 +77,12 @@ public class HexTile
         return path;
     }
     
-    public float getEvenRowOffset()
+    public double getEvenRowOffset()
     {
         return 0;
     }
     
-    public float getOddRowOffset()
+    public double getOddRowOffset()
     {
         return apothem;
     }
@@ -94,8 +94,8 @@ public class HexTile
         FontMetrics metrics = gtx.getFontMetrics();
         int         width   = metrics.stringWidth( str );
         int         height  = metrics.getHeight();
-        float       startX  = radius - width / 2f;
-        float       startY  = radius + height / 2;
+        float       startX  = (float)(radius - width / 2);
+        float       startY  = (float)(radius + height / 2);
         gtx.drawString( str, startX, startY );
     }
 }

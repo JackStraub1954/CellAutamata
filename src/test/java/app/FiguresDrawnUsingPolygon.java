@@ -17,12 +17,12 @@ import javax.swing.SwingUtilities;
 
 import com.gmail.johnstraub1954.cell_automata.main.Polygon;
 
-public class AdHocSketch
+public class FiguresDrawnUsingPolygon
 {
 
     public static void main(String[] args)
     {
-        AdHocSketch    sketch    = new AdHocSketch();
+        FiguresDrawnUsingPolygon    sketch    = new FiguresDrawnUsingPolygon();
         SwingUtilities.invokeLater( () -> sketch.buildGUI() );
 
     }

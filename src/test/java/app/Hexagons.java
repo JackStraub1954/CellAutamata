@@ -4,29 +4,29 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Point;
 import java.awt.RenderingHints;
-import java.awt.geom.AffineTransform;
+import java.awt.geom.Path2D;
+import java.awt.geom.Path2D.Double;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-import com.gmail.johnstraub1954.cell_automata.main.HexTile;
+import com.gmail.johnstraub1954.cell_automata.main.Polygon;
 
 public class Hexagons
 {
 
     public static void main(String[] args)
     {
-        Hexagons    hexagons    = new Hexagons();
-        SwingUtilities.invokeLater( () -> hexagons.buildGUI() );
+        Hexagons    triangles  = new Hexagons();
+        SwingUtilities.invokeLater( () -> triangles.buildGUI() );
 
     }
 
     private void buildGUI()
     {
-        JFrame  frame   = new JFrame( "Hexagon Test" );
+        JFrame  frame   = new JFrame( "Hexagons Test" );
         frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
         frame.setContentPane( new Canvas() );
         frame.pack();
@@ -36,13 +36,16 @@ public class Hexagons
     @SuppressWarnings("serial")
     private class Canvas extends JPanel
     {
-        private final float     radius      = 20;
-        private final HexTile   hexagon     = new HexTile( radius );
-        private final float     yTranslate  = hexagon.yTranslate();
-        private final float     xTranslate  = hexagon.xTranslate();
-        
-        private final double    evenRowXOffset = hexagon.getEvenRowOffset();
-        private final double    oddRowXOffset  = hexagon.getOddRowOffset();
+        private final double    hexSide     = 10;
+        private final Polygon   hexagon     = Polygon.ofSide( 6,  hexSide );
+        private final double    hexRadius   = hexagon.getRadius();
+        private final double    hexApothem  = hexagon.getApothem();
+        // better known as the "long axis"
+        private final double    hexHeight   = 2 * hexRadius;
+        // better known as the "short axis"
+        private final double    hexWidth    = 2 * hexApothem;
+        private final double    rowOffset   = hexHeight * 3. / 4.;
+        private final double    xOffset     = hexWidth;
 
         public Canvas()
         {
@@ -63,22 +66,53 @@ public class Hexagons
             int         height  = getHeight();
             gtx.setColor( Color.CYAN );
             gtx.fillRect( 0, 0, width, height );
-            
-            AffineTransform saveAT  = gtx.getTransform();
             gtx.setColor( Color.BLACK );
+            
             for ( int row = 0 ; row < 100 ; ++row )
             {
-                gtx.setTransform( saveAT );
-                double  rowTransX   = 
-                    row % 2 == 0 ? evenRowXOffset  : oddRowXOffset;
-                double  rowTransY   = row * yTranslate;
-                gtx.translate( rowTransX, rowTransY );
+                // the center of row 0 is hexRadius; for each additional
+                // row, add height * 3/4
+                double  centerY     = hexRadius + row * rowOffset;
+                // the center of column 0 in even rows is the apothem;
+                // in odd rows it is two * apothem.
+                double  colOffset   = 
+                    row % 2 == 0 ? hexApothem : 2 * hexApothem;
                 for ( int col = 0 ; col < 100 ; ++col )
                 {
-                    hexagon.draw( gtx, new Point( col, row ) );
-                    gtx.translate( xTranslate, 0 );
+                    // get a path that makes the hexagon's long axis vertical;
+                    // the first path in an even-numbered row will have the
+                    // top vertex flush with the top of the row, and the
+                    // left side flush with the left of the row.
+                    double  centerX = colOffset + col * xOffset;
+                    double  angle   = -Math.PI / 2;
+                    Path2D  path    = 
+                        hexagon.getPath( centerX, centerY, angle );
+                    gtx.draw( path );
                 }
             }
+            
+            for ( int row = 0 ; row < 100 ; row += 2 )
+                for ( int col = 2 ; col < 100 ; col += 3 )
+                    gtx.fill( getPath( row, col ) );
+            
+            gtx.setColor( Color.RED );
+            for ( int row = -1 ; row < 100 ; row += 2 )
+                for ( int col = -1 ; col < 100 ; col += 5 )
+                    gtx.fill( getPath( row, col ) );
+            
+            gtx.setColor( Color.GREEN );
+            gtx.fill( getPath( 5, 5 ) );
+        }
+        
+        private Path2D getPath( int row, int col )
+        {
+            double  colOffset   = 
+                (row % 2) == 0 ? hexApothem : 2 * hexApothem;
+            double  centerX     = colOffset + col * xOffset;
+            double  centerY     = hexRadius + row * rowOffset;
+            double  angle       = -Math.PI / 2;
+            Path2D  path        = hexagon.getPath( centerX, centerY, angle );
+            return path;
         }
     }
 }
