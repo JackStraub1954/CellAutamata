@@ -236,7 +236,7 @@ public class Grid extends JPanel implements PropertyChangeListener
                 nextEnd.x = nextStart.x;
                 if ( nextStart.x > lrCorner.x )
                 {
-                    dir = Direction.EAST;
+                    dir = Direction.E;
                     nextStart.x = ulCorner.x;
                     nextStart.y = ulCorner.y;
                     nextEnd.x = lrCorner.x;

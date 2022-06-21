@@ -4,25 +4,39 @@ import java.util.Collection;
 import java.util.HashMap;
 
 /**
- * Encapsulates the logic to assemble and evaluate neighborhoods.
+ * Encapsulates the logic to assemble and evaluate neighborhood
+ * of a grid with hexagonal cells.
  * 
- * A <em>neighborhood</em> if a cell <em>self</em>
- * consists of <em>self's</em> eight neighbors.
+ * A <em>neighborhood</em> of a cell, <em>self,</em>
+ * consists of <em>self's</em> nearest six neighbors.
  * The specific neighbor of a cell can be accessed using
  * <em>get(Direction&nbsp;dir)</em>
- * where <em>dir</em> is one of the first eight standard directions
- * as indicated by <em>enum Direction.</em>.
+ * where <em>dir</em> is one of six directions
+ * as indicated by <em>enum Direction:</em> NE, E, S, SE, SW and NW.
+ * <img 
+ *     style="margin-left: 2em;float:right;"
+ *     src="doc-files/HexagonalNeighborhoodSmall.png" 
+ *     alt="Hexagonal Neighborhoods (small)"
+ * >
+ * <p>
+ * Note that other types of hexagonal neighborhoods are common; see
+ * <a href="https://demonstrations.wolfram.com/HexLifeHexagonalCellularAutomata/">
+ *     Hex Life: Hexagonal Cellular Automata
+ * </a>
+ * from the
+ * <a href="https://demonstrations.wolfram.com/">
+ *     Wolfram Demonstrations Project
+ * </a>.
  * 
  * @author Jack Straub
  * 
- * @see HashMap#get(Object)
+ * @see Direction
  */
-public class Neighborhood extends HashMap<Direction, Cell>
+public class HexNeighborhood extends HashMap<Direction, Cell>
 {
     /** Generated serial version UID */
-    private static final long serialVersionUID = -8161806609146596688L;
     
-    /** The Cell whose neighbors can be accessed via this Neighborhood */
+    /** The Cell whose neighbors can be accessed via this RectNeighborhood */
     private final Cell      self;
     
     /**
@@ -31,7 +45,7 @@ public class Neighborhood extends HashMap<Direction, Cell>
      * @param self  the cell from which this neighborhood is extrapolated
      * @param map   map of all cells in this game
      */
-    public Neighborhood( Cell self, GridMap map )
+    public HexNeighborhood( Cell self, GridMap map )
     {
         this.self = self;
         for ( Direction dir : Direction.values() )

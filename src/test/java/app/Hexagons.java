@@ -5,23 +5,24 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.Shape;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.geom.Path2D;
-import java.awt.geom.Path2D.Double;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-import com.gmail.johnstraub1954.cell_automata.main.Polygon;
+import com.gmail.johnstraub1954.cell_automata.main.HexTile;
 
 public class Hexagons
 {
 
     public static void main(String[] args)
     {
-        Hexagons    triangles  = new Hexagons();
-        SwingUtilities.invokeLater( () -> triangles.buildGUI() );
-
+        Hexagons    hexagons    = new Hexagons();
+        SwingUtilities.invokeLater( () -> hexagons.buildGUI() );
     }
 
     private void buildGUI()
@@ -36,22 +37,19 @@ public class Hexagons
     @SuppressWarnings("serial")
     private class Canvas extends JPanel
     {
-        private final double    hexSide     = 10;
-        private final Polygon   hexagon     = Polygon.ofSide( 6,  hexSide );
-        private final double    hexRadius   = hexagon.getRadius();
-        private final double    hexApothem  = hexagon.getApothem();
-        // better known as the "long axis"
-        private final double    hexHeight   = 2 * hexRadius;
-        // better known as the "short axis"
-        private final double    hexWidth    = 2 * hexApothem;
-        private final double    rowOffset   = hexHeight * 3. / 4.;
-        private final double    xOffset     = hexWidth;
+        private final double    side        = 20;
+        private final HexTile   hexTile;
+        
+        private Shape   selection   = null;
 
         public Canvas()
         {
             super( null );
             Dimension   size        = new Dimension( 800, 800 );
             setPreferredSize( size );
+            
+            hexTile = HexTile.ofSide( side );
+            addMouseListener( new MouseProcessor() );
         }
         
         public void paintComponent( Graphics graphics )
@@ -69,50 +67,43 @@ public class Hexagons
             gtx.setColor( Color.BLACK );
             
             for ( int row = 0 ; row < 100 ; ++row )
-            {
-                // the center of row 0 is hexRadius; for each additional
-                // row, add height * 3/4
-                double  centerY     = hexRadius + row * rowOffset;
-                // the center of column 0 in even rows is the apothem;
-                // in odd rows it is two * apothem.
-                double  colOffset   = 
-                    row % 2 == 0 ? hexApothem : 2 * hexApothem;
                 for ( int col = 0 ; col < 100 ; ++col )
                 {
-                    // get a path that makes the hexagon's long axis vertical;
-                    // the first path in an even-numbered row will have the
-                    // top vertex flush with the top of the row, and the
-                    // left side flush with the left of the row.
-                    double  centerX = colOffset + col * xOffset;
-                    double  angle   = -Math.PI / 2;
                     Path2D  path    = 
-                        hexagon.getPath( centerX, centerY, angle );
+                        hexTile.getPath( row, col );
                     gtx.draw( path );
                 }
-            }
             
+            gtx.setColor( Color.BLUE );
             for ( int row = 0 ; row < 100 ; row += 2 )
                 for ( int col = 2 ; col < 100 ; col += 3 )
-                    gtx.fill( getPath( row, col ) );
+                    gtx.fill( hexTile.getPath( row, col ) );
             
             gtx.setColor( Color.RED );
             for ( int row = -1 ; row < 100 ; row += 2 )
                 for ( int col = -1 ; col < 100 ; col += 5 )
-                    gtx.fill( getPath( row, col ) );
+                    gtx.fill( hexTile.getPath( row, col ) );
             
             gtx.setColor( Color.GREEN );
-            gtx.fill( getPath( 5, 5 ) );
+            gtx.fill( hexTile.getPath( 5, 5 ) );
+            
+            if ( selection != null )
+            {
+                gtx.setColor( Color.MAGENTA );
+                gtx.fill( selection );
+            }
         }
         
-        private Path2D getPath( int row, int col )
+        private class MouseProcessor extends MouseAdapter
         {
-            double  colOffset   = 
-                (row % 2) == 0 ? hexApothem : 2 * hexApothem;
-            double  centerX     = colOffset + col * xOffset;
-            double  centerY     = hexRadius + row * rowOffset;
-            double  angle       = -Math.PI / 2;
-            Path2D  path        = hexagon.getPath( centerX, centerY, angle );
-            return path;
+            @Override
+            public void mouseClicked( MouseEvent evt )
+            {
+                int xco = evt.getX();
+                int yco = evt.getY();
+                selection = hexTile.getSelected( xco, yco );
+                repaint();
+            }
         }
     }
 }

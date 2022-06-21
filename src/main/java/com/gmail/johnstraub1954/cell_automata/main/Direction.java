@@ -17,7 +17,7 @@ public enum Direction
 {
     N( 1, 0 ),
     NE( 1, 1 ),
-    EAST( 0, 1 ),
+    E( 0, 1 ),
     SE( -1, 1 ),
     SOUTH( -1, 0 ),
     SW( -1, -1 ),

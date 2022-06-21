@@ -46,7 +46,7 @@ public enum Utils implements PropertyChangeListener
         while ( cellIterator.hasNext() )
         {
             Cell            cell    = cellIterator.next();
-            Neighborhood    hood    = new Neighborhood( cell, gridMap );
+            RectNeighborhood    hood    = new RectNeighborhood( cell, gridMap );
             Cell            newCell = 
                 hood.getNextState( survivalStates, birthStates );
             if ( cell.isAlive() != newCell.isAlive() )

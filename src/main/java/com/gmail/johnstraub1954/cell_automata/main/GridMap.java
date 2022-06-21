@@ -106,6 +106,24 @@ public class GridMap implements Iterable<Cell>
     }
     
     /**
+     * Returns a HexCell corresponding to given coordinates.
+     * 
+     * @param rowCol    the given coordinates
+     * 
+     * @return  a HexCell corresponding to given coordinates
+     */
+    public HexCell getHexCell( RowCol rowCol )
+    {
+        // map the row/col coordinates to x/y coordinates
+        Point   point   = new Point( rowCol.col, rowCol.row );
+        Integer state   = grid.get( point );
+        if ( state == null )
+            state = 0;
+        HexCell cell    = new HexCell( rowCol, state );
+        return cell;
+    }
+    
+    /**
      * Specifies the state of a cell at a given location.
      * The previous state of the cell is returned.
      * This is a convenience method to treat <em>state</em>
