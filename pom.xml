@@ -50,6 +50,13 @@
 			<artifactId>mockito-junit-jupiter</artifactId>
 			<version>4.4.0</version>
 		</dependency>    
+		
+		<!-- matrix library from NIST -->
+		<dependency>
+			<groupId>gov.nist.math</groupId>
+			<artifactId>jama</artifactId>
+			<version>1.0.3</version>
+		</dependency>
 	</dependencies>
 
     <build>    

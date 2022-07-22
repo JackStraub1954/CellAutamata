@@ -1,6 +1,37 @@
 package com.gmail.johnstraub1954.cell_automata.main;
 
-import static com.gmail.johnstraub1954.cell_automata.main.CAConstants.*;
+import static com.gmail.johnstraub1954.cell_automata.main.CAConstants.AUTO_REGEN_MAX_PN;
+import static com.gmail.johnstraub1954.cell_automata.main.CAConstants.AUTO_REGEN_MIN_PN;
+import static com.gmail.johnstraub1954.cell_automata.main.CAConstants.AUTO_REGEN_ON_PN;
+import static com.gmail.johnstraub1954.cell_automata.main.CAConstants.AUTO_REGEN_PACE_PN;
+import static com.gmail.johnstraub1954.cell_automata.main.CAConstants.CTRL_BIRTH_STATES_PN;
+import static com.gmail.johnstraub1954.cell_automata.main.CAConstants.CTRL_GRID_LATEST_PN;
+import static com.gmail.johnstraub1954.cell_automata.main.CAConstants.CTRL_GRID_URL_PN;
+import static com.gmail.johnstraub1954.cell_automata.main.CAConstants.CTRL_SURVIVAL_STATES_PN;
+import static com.gmail.johnstraub1954.cell_automata.main.CAConstants.GRID_CELL_CLICKED_PN;
+import static com.gmail.johnstraub1954.cell_automata.main.CAConstants.GRID_CELL_COLOR_PN;
+import static com.gmail.johnstraub1954.cell_automata.main.CAConstants.GRID_CELL_ORIGIN_PN;
+import static com.gmail.johnstraub1954.cell_automata.main.CAConstants.GRID_CELL_SIZE_PN;
+import static com.gmail.johnstraub1954.cell_automata.main.CAConstants.GRID_COLOR_PN;
+import static com.gmail.johnstraub1954.cell_automata.main.CAConstants.GRID_HEIGHT_PN;
+import static com.gmail.johnstraub1954.cell_automata.main.CAConstants.GRID_KEEP_CENTERED_PN;
+import static com.gmail.johnstraub1954.cell_automata.main.CAConstants.GRID_LINE_COLOR_PN;
+import static com.gmail.johnstraub1954.cell_automata.main.CAConstants.GRID_LINE_SHOW_PN;
+import static com.gmail.johnstraub1954.cell_automata.main.CAConstants.GRID_LINE_WIDTH_PN;
+import static com.gmail.johnstraub1954.cell_automata.main.CAConstants.GRID_MAP_PN;
+import static com.gmail.johnstraub1954.cell_automata.main.CAConstants.GRID_MARGIN_BOTTOM_PN;
+import static com.gmail.johnstraub1954.cell_automata.main.CAConstants.GRID_MARGIN_LEFT_PN;
+import static com.gmail.johnstraub1954.cell_automata.main.CAConstants.GRID_MARGIN_RIGHT_PN;
+import static com.gmail.johnstraub1954.cell_automata.main.CAConstants.GRID_MARGIN_TOP_PN;
+import static com.gmail.johnstraub1954.cell_automata.main.CAConstants.GRID_WIDTH_PN;
+import static com.gmail.johnstraub1954.cell_automata.main.CAConstants.MISC_AUTHOR_EMAIL_PN;
+import static com.gmail.johnstraub1954.cell_automata.main.CAConstants.MISC_AUTHOR_NAME_PN;
+import static com.gmail.johnstraub1954.cell_automata.main.CAConstants.MISC_AUTHOR_TIME_PN;
+import static com.gmail.johnstraub1954.cell_automata.main.CAConstants.MISC_PATTERN_NAME_PN;
+import static com.gmail.johnstraub1954.cell_automata.main.CAConstants.MODIFIED_GRID_PN;
+import static com.gmail.johnstraub1954.cell_automata.main.CAConstants.MODIFIED_GUI_PN;
+import static com.gmail.johnstraub1954.cell_automata.main.CAConstants.MODIFIED_METADATA_PN;
+import static com.gmail.johnstraub1954.cell_automata.main.CAConstants.MODIFIED_PATTERN_DATA_PN;
 
 import java.awt.Color;
 import java.awt.Point;

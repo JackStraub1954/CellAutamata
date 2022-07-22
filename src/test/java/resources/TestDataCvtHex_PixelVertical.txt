@@ -1,0 +1,42 @@
+# Precompiled data for testing hex-to-pixel 
+# and pixel-to-hex coordinate conversion.
+# Limited to vertical conversions (vertex pointing West).
+# Works for odd-r, even-r, odd-q and even-q coordinates.
+# Using the tags "side=, qco=," etc. is for the convenience of the reader.
+# The parser assumes only that the first line contains a single integer
+# (the length of the side the test hexagon)  and each subsequent line contains 
+# four integers in q/r/x/y order.
+#
+side=25
+(qco=-1, rco=0)->(xco=-37, yco=-21)
+(qco=0, rco=-1)->(xco=0, yco=-43)
+(qco=1, rco=-1)->(xco=37, yco=-21)
+(qco=2, rco=-2)->(xco=75, yco=-43)
+(qco=-1, rco=1)->(xco=-37, yco=21)
+(qco=0, rco=0)->(xco=0, yco=0)
+(qco=1, rco=0)->(xco=37, yco=21)
+(qco=2, rco=-1)->(xco=75, yco=0)
+(qco=-1, rco=2)->(xco=-37, yco=64)
+(qco=0, rco=1)->(xco=0, yco=43)
+(qco=1, rco=1)->(xco=37, yco=64)
+(qco=2, rco=0)->(xco=75, yco=43)
+(qco=-1, rco=3)->(xco=-37, yco=108)
+(qco=0, rco=2)->(xco=0, yco=86)
+(qco=1, rco=2)->(xco=37, yco=108)
+(qco=2, rco=1)->(xco=75, yco=86)
+(qco=-1, rco=0)->(xco=-37, yco=-21)
+(qco=0, rco=-1)->(xco=0, yco=-43)
+(qco=1, rco=-1)->(xco=37, yco=-21)
+(qco=2, rco=-2)->(xco=75, yco=-43)
+(qco=-1, rco=1)->(xco=-37, yco=21)
+(qco=0, rco=0)->(xco=0, yco=0)
+(qco=1, rco=0)->(xco=37, yco=21)
+(qco=2, rco=-1)->(xco=75, yco=0)
+(qco=-1, rco=2)->(xco=-37, yco=64)
+(qco=0, rco=1)->(xco=0, yco=43)
+(qco=1, rco=1)->(xco=37, yco=64)
+(qco=2, rco=0)->(xco=75, yco=43)
+(qco=-1, rco=3)->(xco=-37, yco=108)
+(qco=0, rco=2)->(xco=0, yco=86)
+(qco=1, rco=2)->(xco=37, yco=108)
+(qco=2, rco=1)->(xco=75, yco=86)

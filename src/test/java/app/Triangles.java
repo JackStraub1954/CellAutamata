@@ -12,7 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-import com.gmail.johnstraub1954.cell_automata.main.Polygon;
+import com.gmail.johnstraub1954.cell_automata.geometry.Polygon;
 
 public class Triangles
 {

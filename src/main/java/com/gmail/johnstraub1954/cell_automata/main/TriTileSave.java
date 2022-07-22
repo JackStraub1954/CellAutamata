@@ -8,7 +8,6 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Shape;
 import java.awt.geom.Path2D;
-import java.awt.geom.Path2D.Float;
 
 /**
  * @author Jack Straub

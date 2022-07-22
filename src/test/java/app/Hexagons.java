@@ -14,7 +14,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-import com.gmail.johnstraub1954.cell_automata.main.HexTile;
+import com.gmail.johnstraub1954.cell_automata.geometry.Hex;
+import com.gmail.johnstraub1954.cell_automata.geometry.HexTile;
 
 public class Hexagons
 {
@@ -48,7 +49,7 @@ public class Hexagons
             Dimension   size        = new Dimension( 800, 800 );
             setPreferredSize( size );
             
-            hexTile = HexTile.ofSide( side );
+            hexTile = HexTile.ofSide( side, HexTile.HORIZONTAL );
             addMouseListener( new MouseProcessor() );
         }
         
@@ -101,7 +102,8 @@ public class Hexagons
             {
                 int xco = evt.getX();
                 int yco = evt.getY();
-                selection = hexTile.getSelected( xco, yco );
+                Hex hex = hexTile.getSelectedHex( xco, yco );
+                selection = hexTile.getPath(hex);
                 repaint();
             }
         }
