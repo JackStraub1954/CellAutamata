@@ -12,17 +12,23 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
-import com.gmail.johnstraub1954.cell_automata.geometry.Offset;
 import com.gmail.johnstraub1954.cell_automata.geometry.Polygon;
 
-import test_util.CvtTestData;
 import test_util.PolygonDescriptor;
 import test_util.TestConstants;
 
+/**
+ * Generates precomputed data for testing the Polygon class.
+ * 
+ * @author java1
+ *
+ * @see PolygonDescriptor
+ */
 public class PolygonDataCompiler
 {
-	private final List<PolygonDescriptor>	polygonDescrips	= new ArrayList<>();
-	private final Canvas	canvas	= new Canvas();
+	private final List<PolygonDescriptor>	polygonDescrips	= 
+			new ArrayList<>();
+	private final Canvas					canvas			= new Canvas();
 	
 	public static void main(String[] args)
 	{

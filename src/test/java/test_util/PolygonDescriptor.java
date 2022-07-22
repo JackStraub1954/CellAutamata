@@ -3,6 +3,7 @@ package test_util;
 import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
 import java.io.Serializable;
+import java.util.List;
 
 import com.gmail.johnstraub1954.cell_automata.geometry.Polygon;
 
@@ -21,38 +22,45 @@ public class PolygonDescriptor implements Serializable
 	/** Generated serial version UID */
 	private static final long serialVersionUID = 4468370367841976768L;
 	
-	/** Polygon representation (number of sides, length of sides) */
-	public final Polygon	polygon;
-	/** Center of polygon (for computing Path2D */
-	public final Point2D	center;
-	/** Angle of first vertex (for computing Path2D */
+	/** Number of sides */
+	public final int		numSides;
+	/** Length of side */
+	public final double		sideLen;
+	/** Angle of first vertex (for computing Path2D and vertices) */
 	public final double		angle;
+	/** Center of polygon (for computing Path2D and vertices) */
+	public final Point2D	center;
 	/** 
-	 * Verified Path precomputed from above data; 
+	 * Verified Path computed from above data; 
 	 * used to compare against path computed during testing.
 	 * (Cannot be raw Path2D, because Path2D doesn't implement serializable.)
 	 */
 	public final Path2D.Double	expPath;
+	/** 
+	 * Verified list of vertices computed from above data; 
+	 * used to compare against list computed during testing.
+	 */
+	public final List<Point2D>	expVertices;
 	
 	/**
 	 * Constructor.
 	 * 
-	 * @param polygon	the base polygon to use for generating a path
+	 * @param numSides	number of sides of polygon
+	 * @param sideLen	length of polygon's side
 	 * @param center	the center of the path calculated by the Polygon
 	 * @param angle		the initial angle of the path calculated by the Polygon
-	 * @param expPath	the verified path calculated by the Polygon
 	 */
 	public PolygonDescriptor( 
-			Polygon polygon, 
+			int     numSides,
+			double  sideLen,
 			Point2D center, 
-			double angle, 
-			Path2D.Double expPath 
+			double  angle 
     )
 	{
-		this.polygon = polygon;
+		this.numSides = numSides;
+		this.sideLen = sideLen;
 		this.center = center;
 		this.angle = angle;
-		this.expPath = expPath;
 	}
 	
 	/**
@@ -123,7 +131,7 @@ public class PolygonDescriptor implements Serializable
 		double	side		= polygon.getSideLen();
 		int		numSides	= polygon.getNumSides();
 		String	fmt			=
-			"center=(%.1f,%.1f,angle=%.1f,side=%.1f,#sides=%d";
+			"center=(%.1f,%.1f),angle=%.1f,side=%.1f,#sides=%d";
 		String	result		=
 			String.format( fmt, xco, yco, angle, side, numSides );
 		return result;

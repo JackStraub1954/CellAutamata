@@ -1,14 +1,17 @@
 package com.gmail.johnstraub1954.cell_automata.geometry;
 
-import test_util.PolygonDescriptor;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import java.awt.geom.Path2D;
+import java.util.List;
 import java.util.function.Supplier;
 
 import org.junit.jupiter.api.Test;
 
-import com.gmail.johnstraub1954.cell_automata.geometry.Polygon;
+import test_util.PolygonDescriptor;
+import test_util.TestUtils;
 
 class PolygonTest
 {
@@ -182,18 +185,35 @@ class PolygonTest
             data.test( poly, () -> poly.getPerimeter(), "getPerimeter" );
         }
     }
+    
+    @Test
+    public void testGetPathPoint2DDouble()
+    {
+    	List<PolygonDescriptor>	descrips	= TestUtils.getPolygonTestData();
+    	for ( PolygonDescriptor descrip : descrips )
+    	{
+    		int		numSides	= descrip.polygon.getNumSides();
+    		double	sideLen		= descrip.polygon.getSideLen();
+    		Polygon	poly		= Polygon.ofSide( numSides, sideLen );
+    		Path2D	actPath		= descrip.getActualPath( poly );
+    		assertTrue( descrip.equals( actPath ) );
+    	}
+    }
 
-//    @Test
-//    void testGetVertices()
-//    {
-//        fail("Not yet implemented");
-//    }
-//
-//    @Test
-//    void testGetPath()
-//    {
-//        fail("Not yet implemented");
-//    }
+    @Test
+    void testGetVertices()
+    {
+    	fail( "not implemented" );
+    	List<PolygonDescriptor>	descrips	= TestUtils.getPolygonTestData();
+    	for ( PolygonDescriptor descrip : descrips )
+    	{
+    		int		numSides	= descrip.polygon.getNumSides();
+    		double	sideLen		= descrip.polygon.getSideLen();
+    		Polygon	poly		= Polygon.ofSide( numSides, sideLen );
+    		Path2D	actPath		= descrip.getActualPath( poly );
+    		assertTrue( descrip.equals( actPath ) );
+    	}
+    }
     
     private double degreesToRadians( double degrees )
     {
