@@ -2,9 +2,9 @@ package com.gmail.johnstraub1954.cell_automata.geometry;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 
 import java.awt.geom.Path2D;
+import java.awt.geom.Point2D;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -192,9 +192,7 @@ class PolygonTest
     	List<PolygonDescriptor>	descrips	= TestUtils.getPolygonTestData();
     	for ( PolygonDescriptor descrip : descrips )
     	{
-    		int		numSides	= descrip.polygon.getNumSides();
-    		double	sideLen		= descrip.polygon.getSideLen();
-    		Polygon	poly		= Polygon.ofSide( numSides, sideLen );
+    		Polygon	poly		= descrip.getPolygon();
     		Path2D	actPath		= descrip.getActualPath( poly );
     		assertTrue( descrip.equals( actPath ) );
     	}
@@ -203,16 +201,13 @@ class PolygonTest
     @Test
     void testGetVertices()
     {
-    	fail( "not implemented" );
-    	List<PolygonDescriptor>	descrips	= TestUtils.getPolygonTestData();
-    	for ( PolygonDescriptor descrip : descrips )
-    	{
-    		int		numSides	= descrip.polygon.getNumSides();
-    		double	sideLen		= descrip.polygon.getSideLen();
-    		Polygon	poly		= Polygon.ofSide( numSides, sideLen );
-    		Path2D	actPath		= descrip.getActualPath( poly );
-    		assertTrue( descrip.equals( actPath ) );
-    	}
+        List<PolygonDescriptor> descrips    = TestUtils.getPolygonTestData();
+        for ( PolygonDescriptor descrip : descrips )
+        {
+            Polygon         poly        = descrip.getPolygon();
+            List<Point2D>   actVertices = descrip.getActualVertices( poly );
+            assertTrue( descrip.equals( actVertices ) );
+        }
     }
     
     private double degreesToRadians( double degrees )

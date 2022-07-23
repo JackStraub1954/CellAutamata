@@ -66,7 +66,7 @@ public class PolygonDataCompiler
 			Point2D				center	= new Point2D.Double( xco, yco );
 			Polygon				poly	= Polygon.ofSide( numSides, side );
 			PolygonDescriptor	descrip	= 
-					PolygonDescriptor.ofPolygon( poly, center, orientationStart );
+					new PolygonDescriptor( poly, center, orientationStart );
 			polygonDescrips.add( descrip );
 			canvas.addPolygon( poly, center, orientationStart );
 			xco += 4 * side;

@@ -223,6 +223,12 @@ class HexTileTest
             }
     }
     
+    @Test
+    public void testGetRowColDimensionVertical()
+    {
+        
+    }
+    
     /**
      * Reads a file containing precompiled path data.
      * Calculates a new path using the stored data and verifies

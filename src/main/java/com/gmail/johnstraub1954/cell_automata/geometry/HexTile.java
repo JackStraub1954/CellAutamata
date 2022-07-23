@@ -262,7 +262,7 @@ public class HexTile implements GridTile
      * Given the dimensions of a plane, 
      * and the length of a side of this tile,
      * return the number of columns and rows
-     * that will fit in the plane.
+     * that be needed to tile the plane.
      * 
      * @param   size    the width and height of the plane to tile
      */
@@ -275,13 +275,17 @@ public class HexTile implements GridTile
         int			rows	= 0;
         if ( getOrientation() == VERTICAL )
         {
-        	cols = (int)Math.ceil( size.width / apothem );
-        	rows = (int)Math.ceil( size.height / radius );
+            double  cellWidth   = (2 * radius) * (3. / 4.);
+            double  cellHeight  = 2 * apothem;
+        	cols = (int)Math.ceil( size.width / cellWidth ) + 1;
+        	rows = (int)Math.ceil( size.height / cellHeight );
         }
         else
         {
-        	cols = (int)Math.ceil( size.height / radius );
-        	rows = (int)Math.ceil( size.width / apothem );
+            double  cellWidth   = 2 * apothem;
+            double  cellHeight  = (2 * radius) * (3. / 4.);
+        	cols = (int)Math.ceil( size.width / cellWidth );
+        	rows = (int)Math.ceil( size.height / cellHeight ) + 1;
         }
         Dimension	out		= new Dimension( cols, rows );
         return out;
