@@ -269,24 +269,35 @@ public class HexTile implements GridTile
     @Override
     public Dimension getColRowDimension( Dimension size )
     {
-        double		radius	= hexagon.getRadius();
-        double  	apothem	= hexagon.getApothem();
-        int			cols    = 0;
-        int			rows	= 0;
+        double  radius      = hexagon.getRadius();
+        double  apothem	    = hexagon.getApothem();
+        double  side        = hexagon.getSideLen();
+        int     cols        = 0;
+        int	    rows        = 0;
+        double  cellWidth;
+        double  cellHeight;
         if ( getOrientation() == VERTICAL )
         {
-            double  cellWidth   = (2 * radius) * (3. / 4.);
-            double  cellHeight  = 2 * apothem;
-        	cols = (int)Math.ceil( size.width / cellWidth ) + 1;
-        	rows = (int)Math.ceil( size.height / cellHeight );
+            // In this orientation width of a cell is 2 * radius,
+            // and the horizontal distance between the centers of 
+            // adjacent cells is width * (3/4).
+            cellWidth   = (2 * radius) * .75;
+            cellHeight  = 2 * apothem;
         }
         else
         {
-            double  cellWidth   = 2 * apothem;
-            double  cellHeight  = (2 * radius) * (3. / 4.);
-        	cols = (int)Math.ceil( size.width / cellWidth );
-        	rows = (int)Math.ceil( size.height / cellHeight ) + 1;
+            // In this orientation height of a cell is 2 * radius,
+            // and the vertical distance between the centers of 
+            // adjacent cells is height * (3/4).
+            cellWidth   = 2 * apothem;
+            cellHeight  = (2 * radius) * .75;
         }
+        
+        // North and west edges of the first row/column overlap the
+        // rectangle to be tessellated, so it is sometimes necessary 
+        // to add an extra row/column to fully cover the rectangle
+        cols = (int)Math.ceil( size.width / cellWidth ) + 1;
+        rows = (int)Math.ceil( size.height / cellHeight ) + 1;
         Dimension	out		= new Dimension( cols, rows );
         return out;
     }

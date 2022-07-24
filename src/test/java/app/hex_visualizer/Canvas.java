@@ -35,6 +35,17 @@ public class Canvas extends JPanel
         this.tile = tile;
     }
     
+    public void setTile( HexTile tile )
+    {
+        this.tile = tile;
+    }
+    
+    public void setRect( int width, int height )
+    {
+        rectWidth = width;
+        rectHeight = height;
+    }
+    
     public void paintComponent( Graphics graphics )
     {
         gtx = (Graphics2D)graphics.create();

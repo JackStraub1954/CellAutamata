@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.geom.Path2D;
@@ -223,10 +224,24 @@ class HexTileTest
             }
     }
     
-    @Test
-    public void testGetRowColDimensionVertical()
+    @ParameterizedTest
+    @EnumSource( HexLayout.class )
+    public void testGetRowColDimension( HexLayout layout )
     {
-        
+        // Given a rectangle, make sure that getRowColDimension
+        // fully covers the rectangle, and does not extend more than
+        // 50% past the east and south edges of the rectangle;
+    }
+    
+    private void 
+    testGetRowColDimension( int rWidth, int rHeight, HexTile tile )
+    {
+        int         overWidth   = (int)(1.5 * rWidth);
+        int         overHeight  = (int)(1.5 * rHeight);
+        Rectangle   rect    = new Rectangle( 0, 0, rWidth, rHeight );
+        Dimension   dimIn       = new Dimension( rWidth, rHeight );
+        Dimension   dimOut      = tile.getColRowDimension( dimIn );
+            
     }
     
     /**
