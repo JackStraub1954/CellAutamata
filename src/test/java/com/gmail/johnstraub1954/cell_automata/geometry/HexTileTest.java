@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
@@ -53,7 +54,7 @@ class HexTileTest
             String  fileName    = file.getName();
             if ( fileName.startsWith( prefix ) && fileName.endsWith( suffix ) )
             {
-                System.out.println( fileName );
+//                System.out.println( fileName );
                 try ( 
                     FileInputStream fileStream = new FileInputStream( file );
                     ObjectInputStream objStream = 
@@ -228,20 +229,48 @@ class HexTileTest
     @EnumSource( HexLayout.class )
     public void testGetRowColDimension( HexLayout layout )
     {
+        final String    fmt = "%d, %d, %3.1f, %s%n";
         // Given a rectangle, make sure that getRowColDimension
         // fully covers the rectangle, and does not extend more than
-        // 50% past the east and south edges of the rectangle;
+        // 50% past the east and south edges of the rectangle
+        for ( int height = 100 ; height < 5000 ; height += 250 )
+            for ( int width = 100 ; width < 5000 ; width += 250 )
+                for ( double side = 10 ; side < 30 ; side += 5.7 )
+                {
+                    HexTile tile = HexTile.ofSide( side, layout );
+                    testGetRowColDimension( width, height, tile );
+                    System.out.printf( fmt, height, width, side, layout );
+                }
     }
     
     private void 
     testGetRowColDimension( int rWidth, int rHeight, HexTile tile )
     {
-        int         overWidth   = (int)(1.5 * rWidth);
-        int         overHeight  = (int)(1.5 * rHeight);
-        Rectangle   rect    = new Rectangle( 0, 0, rWidth, rHeight );
-        Dimension   dimIn       = new Dimension( rWidth, rHeight );
-        Dimension   dimOut      = tile.getColRowDimension( dimIn );
-            
+        int             overWidth   = (int)(1.5 * rWidth);
+        int             overHeight  = (int)(1.5 * rHeight);
+        Rectangle       rect        = new Rectangle( 0, 0, rWidth, rHeight );
+        Dimension       dimIn       = new Dimension( rWidth, rHeight );
+        Dimension       dimOut      = tile.getColRowDimension( dimIn );
+        Path2D          union       = new Path2D.Double();
+        
+        // form union of all paths that are supposed to tile
+        // the above rectangle
+        for ( int col = 0 ; col < dimOut.width ; ++col )
+            for ( int row = 0 ; row < dimOut.height ; ++ row )
+            {
+                Offset  offset      = new Offset( col, row );
+                Path2D  nextTile    = tile.getPath( offset );
+                union.append( nextTile, false );
+            }
+        
+        // verify that the rectangle is fully tiled
+        //assertTrue( union.contains( rect ) );
+        for ( int row = 1 ; row < rect.height ; ++row )
+            for ( int col = 1 ; col < rect.width ; ++ col )
+            {
+                Point   point   = new Point( col, row );
+                assertTrue( union.contains( point ) );
+            }
     }
     
     /**
