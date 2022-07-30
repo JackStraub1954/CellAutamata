@@ -233,12 +233,15 @@ class HexTileTest
         // Given a rectangle, make sure that getRowColDimension
         // fully covers the rectangle, and does not extend more than
         // 50% past the east and south edges of the rectangle
-        for ( int height = 100 ; height < 5000 ; height += 250 )
-            for ( int width = 100 ; width < 5000 ; width += 250 )
-                for ( double side = 10 ; side < 30 ; side += 5.7 )
+        for ( int width = 20 ; width < 200 ; width += 20 )
+            for ( int height = 20 ; height < 200 ; height += 20 )
+                for ( double side = 5 ; side < 15 ; side += 3.7 )
                 {
                     HexTile tile = HexTile.ofSide( side, layout );
+                    double  millis  = System.currentTimeMillis();
                     testGetRowColDimension( width, height, tile );
+                    double  diff    = (System.currentTimeMillis() - millis) / 1000;
+                    System.out.printf( "%4.37f%n", diff );
                     System.out.printf( fmt, height, width, side, layout );
                 }
     }
