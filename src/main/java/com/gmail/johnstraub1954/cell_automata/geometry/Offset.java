@@ -100,7 +100,7 @@ public class Offset implements Serializable
         else if ( obj instanceof Offset )
         {
             Offset  that    = (Offset)obj;
-            result = this.col == that.col && this.row == that .row;
+            result = this.col == that.col && this.row == that.row;
         }
         return result;
     }
@@ -118,4 +118,20 @@ public class Offset implements Serializable
         int hash    = Objects.hash( col, row );
         return hash;
     }
+    
+    /**
+     * Returns a string representation of this Offset
+     * in the format "(col,row)".
+     * 
+     * @return a string representation of this Offset
+     */
+    @Override
+    public String toString()
+    {
+        StringBuilder   bldr    = new StringBuilder();
+        bldr.append( "(" ).append( col ).append( "," )
+            .append( row ).append( ")" );
+        return bldr.toString();
+    }
 }
+

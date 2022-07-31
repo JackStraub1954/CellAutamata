@@ -12,18 +12,9 @@ public class TestConstants
      * To read data, always use ClassLoader.getResourceAsStream(). 
      */
     public static final String  TEST_RESOURCES  = "src/test/resources/";
-    /** 
-     * Precompiled test data file for converting between hex coordinates
-     * and pixel coordinates for horizontal (vertex pointing North) hexagons.
-     */
-    public static final String  TEST_DATA_CVT_HEX_PIXEL_H   =
-        "TestDataCvtHex_PixelHorizontal.txt";
-    /** 
-     * Precompiled test data file for converting between hex coordinates
-     * and pixel coordinates for vertical (vertex pointing West) hexagons.
-     */
-    public static final String  TEST_DATA_CVT_HEX_PIXEL_V   =
-        "TestDataCvtHex_PixelVertical.txt";
+    /** Test data for validating HexNeighborhood generation */
+    public static final String  HEX_NEIGHBOR_TEST_DATA  = 
+        "HexNeighborTestData.ser";
     /** 
      * The name of the directory where serial files containing
      * precompiled Path2D objects are stored.

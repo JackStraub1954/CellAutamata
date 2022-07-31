@@ -1,6 +1,7 @@
 package com.gmail.johnstraub1954.cell_automata.geometry;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -241,9 +242,78 @@ class HexTileTest
                     double  millis  = System.currentTimeMillis();
                     testGetRowColDimension( width, height, tile );
                     double  diff    = (System.currentTimeMillis() - millis) / 1000;
-                    System.out.printf( "%4.37f%n", diff );
-                    System.out.printf( fmt, height, width, side, layout );
+//                    System.out.printf( "%4.37f%n", diff );
+//                    System.out.printf( fmt, height, width, side, layout );
                 }
+    }
+    
+    @Test
+    public void testGetNeighborhoodOffset()
+    {
+        List<HexNeighborhood>   list    = getNeighborhoodTestData();
+        // Counters to verify that multiple tests
+        // for each layout were executed.
+        int                     evenRCounter    = 0;
+        int                     oddRCounter    = 0;
+        int                     evenQCounter    = 0;
+        int                     oddQCounter    = 0;
+        for ( HexNeighborhood expHood : list )
+        {
+            Offset          self    = expHood.getSelf();
+            HexLayout       layout  = expHood.getLayout();
+            HexTile         tile    = HexTile.ofSide( 10, layout );
+            HexNeighborhood actHood = tile.getNeighborhood( self );
+            assertEquals( expHood, actHood );
+            switch ( layout )
+            {
+            case EVEN_R:
+                ++evenRCounter;
+                break;
+            case EVEN_Q:
+                ++evenQCounter;
+                break;
+            case ODD_R:
+                ++oddRCounter;
+                break;
+            case ODD_Q:
+                ++oddQCounter;
+                break;
+            default:
+                fail( "invalid state" );
+            }
+        }
+        
+        assertTrue( evenRCounter > 2, "insufficient testing" );
+        assertTrue( oddRCounter > 2, "insufficient testing" );
+        assertTrue( evenQCounter > 2, "insufficient testing" );
+        assertTrue( oddQCounter > 2, "insufficient testing" );
+    }
+    
+    @SuppressWarnings("unchecked")
+    public List<HexNeighborhood> getNeighborhoodTestData()
+    {
+        List<HexNeighborhood>   list    = null;
+        String  testPath                =
+            TestConstants.TEST_RESOURCES + 
+            TestConstants.HEX_NEIGHBOR_TEST_DATA;
+        File    file    = new File( testPath );
+        try ( FileInputStream fileStream = new FileInputStream( file );
+              ObjectInputStream objStream = 
+                  new ObjectInputStream( fileStream ) )
+        {
+            Object  expList = objStream.readObject();
+            assert( expList instanceof List<?> );
+            List<?> anyList = (List<?>)expList;
+            assertFalse( anyList.isEmpty() );
+            assertTrue( anyList.get( 0 ) instanceof HexNeighborhood );
+            list = (List<HexNeighborhood>)anyList;
+        }
+        catch ( ClassNotFoundException | IOException exc )
+        {
+            exc.printStackTrace();
+            fail( "error reading test data", exc );
+        }
+        return list;
     }
     
     private void 

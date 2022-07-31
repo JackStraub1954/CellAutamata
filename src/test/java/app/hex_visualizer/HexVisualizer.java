@@ -1,13 +1,17 @@
 package app.hex_visualizer;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.util.List;
 
-import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -16,7 +20,11 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
+import com.gmail.johnstraub1954.cell_automata.geometry.HexLayout;
+import com.gmail.johnstraub1954.cell_automata.geometry.HexNeighborhood;
 import com.gmail.johnstraub1954.cell_automata.geometry.HexTile;
+
+import test_util.TestConstants;
 
 /**
  * Tool for visualizing a hex tessalation.
@@ -66,17 +74,23 @@ public class HexVisualizer
         private final JTextField    rectWidth   = new JTextField( "500", 6 );
         private final JTextField    rectHeight  = new JTextField( "500", 6 );
         private final JTextField    sideLength  = new JTextField( "20", 6 );
-        private final JRadioButton  horizontal  = 
-            new JRadioButton( "Horizontal", true );
-        private final JRadioButton  vertical    = 
-            new JRadioButton( "Vertical" );
+        private final JRadioButton  oddR        = 
+                new JRadioButton( "ODD-R", true );
+        private final JRadioButton  evenR       = 
+            new JRadioButton( "EVEN-R" );
+        private final JRadioButton  oddQ        = 
+                new JRadioButton( "ODD-Q", true );
+        private final JRadioButton  evenQ       = 
+            new JRadioButton( "EVEN-Q" );
 
         public Controls()
 	    {
 	        super( new GridBagLayout() );
 	        ButtonGroup    buttonGroup = new ButtonGroup();
-	        buttonGroup.add( vertical );
-	        buttonGroup.add( horizontal );
+            buttonGroup.add( evenR );
+            buttonGroup.add( oddR );
+            buttonGroup.add( evenQ );
+            buttonGroup.add( oddQ );
 	        
 	        GridBagConstraints gbc = new GridBagConstraints();
 	        gbc.anchor = GridBagConstraints.WEST;
@@ -101,9 +115,15 @@ public class HexVisualizer
             
             gbc.gridx = 0;
             ++gbc.gridy;
-            add( horizontal, gbc );
+            add( oddR, gbc );
             ++gbc.gridx;
-            add( vertical, gbc );
+            add( evenR, gbc );
+            
+            gbc.gridx = 0;
+            ++gbc.gridy;
+            add( oddQ, gbc );
+            ++gbc.gridx;
+            add( evenQ, gbc );
             
             JButton apply   = new JButton( "Apply" );
             apply.addActionListener( e -> apply() );
@@ -113,6 +133,31 @@ public class HexVisualizer
             gbc.gridwidth = 2;
             add( apply, gbc );
             
+            JButton save    = new JButton( "Save Test Data" );
+            save.addActionListener( e -> saveTestData() );
+            gbc.anchor = GridBagConstraints.CENTER;
+            gbc.gridx = 0;
+            ++gbc.gridy;
+            gbc.gridwidth = 2;
+            add( save, gbc );
+
+            JEditorPane message = new JEditorPane();
+            String      text    =
+                "<html>"
+                + "<p style=\"font-size: 125%;\"><em><strong>"
+                + "click on a tile<br/>"
+                + "to see the tile's<br/>"
+                + "neighborhood"
+                + "</strong></em></p></html>";
+            message.setEditable( false );
+            message.setBackground( getBackground() );
+            message.setContentType( "text/html" );
+            message.setText( text );
+            gbc.gridx = 0;
+            ++gbc.gridy;
+            gbc.gridwidth = 2;
+            add( message, gbc );
+            
             frame.getRootPane().setDefaultButton( apply );
 	    }
         
@@ -120,15 +165,20 @@ public class HexVisualizer
         {
             try
             {
-                int     rWidth      = getInt( rectWidth, "Rect Width" );
-                int     rHeight     = getInt( rectHeight, "Rect Height" );
-                double  side        = getDouble( sideLength, "Side" );
-                int     orientation = 
-                    horizontal.isSelected() ?
-                    HexTile.HORIZONTAL :
-                    HexTile.VERTICAL;
-                HexTile tile        = HexTile.ofSide( side, orientation );
-                canvas.setTile( tile );
+                int         rWidth      = getInt( rectWidth, "Rect Width" );
+                int         rHeight     = getInt( rectHeight, "Rect Height" );
+                double      side        = getDouble( sideLength, "Side" );
+                HexLayout   layout; 
+                if ( oddR.isSelected() )
+                    layout = HexLayout.ODD_R;
+                else if ( evenR.isSelected() )
+                    layout = HexLayout.EVEN_R;
+                else if ( oddQ.isSelected() )
+                    layout = HexLayout.ODD_Q;
+                else
+                    layout = HexLayout.EVEN_Q;
+                HexTile tile    = HexTile.ofSide( side, layout );
+                canvas.setTile( tile ) ;
                 canvas.setRect( rWidth, rHeight );
                 canvas.repaint();
             }
@@ -172,6 +222,38 @@ public class HexVisualizer
             }
             
             return result;
+        }
+        
+        private void saveTestData()
+        {
+            List<HexNeighborhood>   list        = 
+                canvas.getAllNeighborhoods();
+            if ( list.isEmpty() )
+            {
+                String  message = "No test data to save.";
+                JOptionPane.showMessageDialog( null, message );
+            }
+            else
+                saveTestData( list );
+        }
+        
+        private void saveTestData( List<HexNeighborhood> list )
+        {
+            String  testPath    =
+                TestConstants.TEST_RESOURCES + 
+                TestConstants.HEX_NEIGHBOR_TEST_DATA;
+            File    file    = new File( testPath );
+            try ( FileOutputStream fileStream = new FileOutputStream( file );
+                  ObjectOutputStream objStream = 
+                      new ObjectOutputStream( fileStream ) )
+            {
+                objStream.writeObject( list );
+            }
+            catch ( IOException exc )
+            {
+                exc.printStackTrace();
+                System.exit( 1 );
+            }
         }
 	}
 }

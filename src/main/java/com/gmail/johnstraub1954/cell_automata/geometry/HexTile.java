@@ -381,9 +381,9 @@ public class HexTile implements GridTile
      * 			of this type of tile
 	 */
 	@Override
-	public Neighborhood getNeighborhood(Offset self)
+	public HexNeighborhood getNeighborhood(Offset self)
 	{
-		Neighborhood	neighborhood	= new HexNeighborhood( self, layout );
+		HexNeighborhood   neighborhood	= new HexNeighborhood( self, layout );
 		return neighborhood;
 	}
 }
