@@ -87,6 +87,7 @@ public class HexNeighborhood implements Neighborhood, Serializable
             HexNeighborhood that    = (HexNeighborhood)obj;
             rcode = 
                 this.self.equals( that.self )
+                && this.layout == that.layout
                 && this.neighbors.size() == that.neighbors.size()
                 && this.neighbors.containsAll( that.neighbors )
                 && that.neighbors.containsAll( this.neighbors );

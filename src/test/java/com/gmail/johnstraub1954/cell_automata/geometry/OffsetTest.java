@@ -2,6 +2,7 @@ package com.gmail.johnstraub1954.cell_automata.geometry;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.awt.Point;
 
@@ -90,5 +91,18 @@ class OffsetTest
         assertEquals( offsetA, offsetB );
         assertEquals( offsetB, offsetA );
         assertEquals( offsetA.hashCode(), offsetB.hashCode() );
+    }
+    
+    @Test
+    public void testToString()
+    {
+        int     col     = 18;
+        String  colStr  = "" + col;
+        int     row     = col + 1;
+        String  rowStr  = "" + row;
+        Offset  offset  = new Offset( col, row );
+        String  str     = offset.toString();
+        assertTrue( str.contains( colStr ) );
+        assertTrue( str.contains( rowStr ) );
     }
 }
