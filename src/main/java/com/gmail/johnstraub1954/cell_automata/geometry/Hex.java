@@ -39,10 +39,6 @@ import java.util.Objects;
  * 
  * @author Jack Straub
  */
-/**
- * @author johns
- *
- */
 public class Hex implements Serializable
 {
     /** Generated serial version UID */

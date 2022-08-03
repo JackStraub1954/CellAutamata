@@ -12,7 +12,7 @@ import java.util.Set;
 /**
  * Encapsulates all cells in a grid. 
  * Each cell is associated with a point
- * and an integer state;
+ * and an integer state.
  * In the context of an environment
  * in which states are limited to <em>alive</em> and <em>dead</em>,
  * non-0 states represent live cells,
