@@ -39,6 +39,10 @@ import java.util.Objects;
  * 
  * @author Jack Straub
  */
+/**
+ * @author johns
+ *
+ */
 public class Hex implements Serializable
 {
     /** Generated serial version UID */
@@ -116,6 +120,13 @@ public class Hex implements Serializable
         return sco;
     }
     
+    /**
+     * Add a given hex value to this hex value
+     * producing a new Hex object containing the sum.
+     * 
+     * @param addend    the given Hex value
+     * @return  the sum of this object and the given object
+     */
     public Hex add( Hex addend )
     {
         int sumQco  = qco + addend.qco;

@@ -3,6 +3,16 @@ package com.gmail.johnstraub1954.cell_automata.geometry;
 import java.awt.Dimension;
 import java.awt.geom.Path2D;
 
+/**
+ * This interface identifies the operations
+ * that a tile (of some dimension)
+ * needs to perform
+ * in order to support classes
+ * that do tiling and tiling-related tasks.
+ * 
+ * @author Jack S.
+ *
+ */
 public interface GridTile
 {
     /** 
