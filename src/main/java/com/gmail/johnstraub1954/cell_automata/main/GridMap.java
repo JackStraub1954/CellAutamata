@@ -9,6 +9,8 @@ import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Set;
 
+import com.gmail.johnstraub1954.cell_automata.geometry.Offset;
+
 /**
  * Encapsulates all cells in a grid. 
  * Each cell is associated with a point
@@ -106,20 +108,19 @@ public class GridMap implements Iterable<Cell>
     }
     
     /**
-     * Returns a HexCell corresponding to given coordinates.
+     * Returns the cell corresponding to a given offset.
      * 
-     * @param rowCol    the given coordinates
-     * 
-     * @return  a HexCell corresponding to given coordinates
+     * @param   offset   the location of the target cell
+     *  
+     * @return the cell corresponding to the given offset
      */
-    public HexCell getHexCell( RowCol rowCol )
+    public Cell get( Offset offset )
     {
-        // map the row/col coordinates to x/y coordinates
-        Point   point   = new Point( rowCol.col, rowCol.row );
+        Point   point   = offset.getPoint();
         Integer state   = grid.get( point );
         if ( state == null )
             state = 0;
-        HexCell cell    = new HexCell( rowCol, state );
+        Cell    cell    = new Cell( point, state );
         return cell;
     }
     

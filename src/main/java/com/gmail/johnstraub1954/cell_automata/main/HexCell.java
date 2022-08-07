@@ -159,20 +159,6 @@ public class HexCell
     }
     
     /**
-     * Get the neighbor of a cell in a given direction.
-     * 
-     * @param dir   the given direction
-     * 
-     * @return the neighbor of a cell in a given direction.
-     */
-    public HexCell getNeighbor( Direction dir, GridMap map )
-    {
-        RowCol      rowCol  = getRelativeCoordinates( dir );
-        HexCell     cell    = map.getHexCell( rowCol );
-        return cell;
-    }
-    
-    /**
      * Returns the coordinates of a cell
      * relative to this Cell
      * in a given direction.

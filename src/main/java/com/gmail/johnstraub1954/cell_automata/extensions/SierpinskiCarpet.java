@@ -22,6 +22,7 @@ import javax.swing.SwingUtilities;
  * @author Jack Straub
  *
  */
+@SuppressWarnings("serial")
 public class SierpinskiCarpet extends JPanel
 {
     /** 

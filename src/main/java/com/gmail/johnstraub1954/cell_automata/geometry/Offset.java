@@ -84,6 +84,20 @@ public class Offset implements Serializable
     }
     
     /**
+     * Convenience routine
+     * to create a Point object from this Offset.
+     * The point will have a direct correspondence 
+     * between its x-coordinate and the column of this Offset,
+     * and its y-coordinate and the row of this Offset.
+     * @return
+     */
+    public Point getPoint()
+    {
+        Point   point   = new Point( col, row );
+        return point;
+    }
+    
+    /**
      * Tests this offset against another object for equality.
      * The two objects are equal if the other object is an Offset,
      * and its row and column components are equal to those
@@ -103,6 +117,21 @@ public class Offset implements Serializable
             result = this.col == that.col && this.row == that.row;
         }
         return result;
+    }
+    
+    /**
+     * Add a given Offset to this Offset.
+     * 
+     * @param addend    the given Offset
+     * 
+     * @return  the result of the operation
+     */
+    public Offset add( Offset addend )
+    {
+        int     col     = addend.col + this.col;
+        int     row     = addend.row + this.row;
+        Offset  offset  = new Offset( col, row );
+        return offset;
     }
     
     /**

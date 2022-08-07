@@ -70,4 +70,15 @@ public interface GridTile
      * 			of this type of tile
      */
     public Neighborhood getNeighborhood( Offset self );
+    
+    /**
+     * Given pixel coordinates, find the corresponding tile in Offset coordinates.
+     * 
+     * @param xco   given x pixel coordinate
+     * @param yco   given y pixel coordinate
+     * 
+     * @return  Offset coordinates of tile 
+     *          corresponding to the given pixel coordinates
+     */
+    public Offset getSelected( int xco, int yco );
 }

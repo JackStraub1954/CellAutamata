@@ -173,7 +173,7 @@ public class HexTile implements GridTile
     }
     
     /**
-     * Returns a HexTile with a given side lengtand layout.
+     * Returns a HexTile with a given side length and layout.
      * 
      * @param sideLen       the given side length 
      * @param layout   the given layout
@@ -187,15 +187,15 @@ public class HexTile implements GridTile
     }
     
     /**
-     * Based on pixel coordinates, calculate a path representing
-     * the selected hexagon.
+     * Based on pixel coordinates, find the axial coordinates
+     * of the selected hexagon.
      * Coordinates are typically determined by mouse selection.
      * 
      * @param xco   x pixel coordinate
      * @param yco   y pixel coordinate
      * 
-     * @return  the path representing the hexagon associated
-     *          with pixel coordinates
+     * @return  the axial coordinates
+     *          of the selected hexagon
      */
     public Hex getSelectedHex( int xco, int yco )
     {
@@ -245,6 +245,14 @@ public class HexTile implements GridTile
         return point;
     }
     
+    @Override
+    public Offset getSelected( int xco, int yco )
+    {
+        Hex     hex     = getSelectedHex( xco, yco );
+        Offset  offset  = layout.toOffset( hex );
+        return offset;
+    }
+    
     /**
      * Get a path to draw this hexagon at the given axial coordinates.
      * 
@@ -260,9 +268,8 @@ public class HexTile implements GridTile
 
     /**
      * Given the dimensions of a plane, 
-     * and the length of a side of this tile,
      * return the number of columns and rows
-     * that be needed to tile the plane.
+     * needed to tesselate the plane with this tile.
      * 
      * @param   size    the width and height of the plane to tile
      */
@@ -271,7 +278,6 @@ public class HexTile implements GridTile
     {
         double  radius      = hexagon.getRadius();
         double  apothem	    = hexagon.getApothem();
-        double  side        = hexagon.getSideLen();
         int     cols        = 0;
         int	    rows        = 0;
         double  cellWidth;
