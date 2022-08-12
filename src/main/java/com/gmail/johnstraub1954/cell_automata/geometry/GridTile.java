@@ -81,4 +81,6 @@ public interface GridTile
      *          corresponding to the given pixel coordinates
      */
     public Offset getSelected( int xco, int yco );
+    
+    public GridTile ofValues( String ...strings );
 }

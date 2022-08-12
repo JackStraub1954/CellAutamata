@@ -45,9 +45,9 @@ public enum Utils implements PropertyChangeListener
         Iterator<Cell>  cellIterator    = gridMap.iterator();
         while ( cellIterator.hasNext() )
         {
-            Cell            cell    = cellIterator.next();
-            RectNeighborhood    hood    = new RectNeighborhood( cell, gridMap );
-            Cell            newCell = 
+            Cell                cell    = cellIterator.next();
+            QuadNeighborhood    hood    = new QuadNeighborhood( cell, gridMap );
+            Cell                newCell = 
                 hood.getNextState( survivalStates, birthStates );
             if ( cell.isAlive() != newCell.isAlive() )
                 cellsToModify.add( newCell );

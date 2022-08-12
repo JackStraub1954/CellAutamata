@@ -174,6 +174,17 @@ public class CAConstants
      * or from the command line.
      */
     public static final String  GRID_MAP_PN          = "gridMap";
+    public static final String  GRID_QUAD_TILE_PN   = "gridQuadTile";
+    public static final String  GRID_QUAD_TILE_DV   = "QuadTile";
+    public static final String  GRID_HEX_TILE_PN    = "gridHexTile";
+    public static final String  GRID_HEX_TILE_DV    = "HexTile";
+    /**
+     * The GridTile that controls things like the shape of a cell, length of 
+     * side of cell, and pixel-to-cell mappings. E.g., QuadTile, HexTile.
+     */
+    public static final String  GRID_TILE_PN        = "gridTile";
+    /** GridTile default value. */
+    public static final String  GRID_TILE_DV        = "QuadTile";
     
     ////////////////////////////////////////
     //
@@ -344,6 +355,7 @@ public class CAConstants
     // MISCELLANEOUS PROPERTIES
     // Miscellaneous properties are mostly devoted to bookkeeping,
     // such as pattern name, author name, author email address, etc.
+    // Also includes tile class names and related values.
     //
     ////////////////////////////////////////
     

@@ -66,10 +66,18 @@ import java.util.Properties;
 import java.util.function.Consumer;
 
 /**
+ * Property manager for this facility.
+ * There should be a getter for most properties named in the Constants class.
+ * Theoretically, property values are obtained via a typical
+ * command-line/environment-variable/property-file/default-value hierarchy.
+ * 
+ * TODO implement and test command-line/environment-variable/property-file/default-value
+ * hierarchy.
+ * 
  * @author Jack Straub
  *
  */
-public class ACProperties extends Properties
+public class CAProperties extends Properties
 {
     /** Generated serial version UID */
     private static final long serialVersionUID = 998230253608692257L;
@@ -77,7 +85,7 @@ public class ACProperties extends Properties
     /**
      * Default constructor.
      */
-    public ACProperties()
+    public CAProperties()
     {
         super();
     }
@@ -87,7 +95,7 @@ public class ACProperties extends Properties
      * 
      * @param initialCapacity   initial capacity of this object
      */
-    public ACProperties( int initialCapacity )
+    public CAProperties( int initialCapacity )
     {
         super( initialCapacity );
     }
@@ -97,7 +105,7 @@ public class ACProperties extends Properties
      * 
      * @param defaults  the set of default values for properties
      */
-    public ACProperties( Properties defaults )
+    public CAProperties( Properties defaults )
     {
         super( defaults );
     }

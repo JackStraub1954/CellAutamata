@@ -42,6 +42,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.function.Consumer;
 
+import com.gmail.johnstraub1954.cell_automata.geometry.GridTile;
+
 /**
  * This class provides a single point of access to parameters
  * that may change dynamically during the course of Game of Life execution.
@@ -60,7 +62,7 @@ public enum Parameters
     INSTANCE;
 
     /** Object to manage property initialization */
-    private final ACProperties props   = new ACProperties();
+    private final CAProperties props   = new CAProperties();
     
     /** Automatic regeneration on/off */
     private boolean             autoRegenerationOn;
@@ -114,6 +116,8 @@ public enum Parameters
      * Grid map
      */
     private GridMap             gridMap;
+    /**  Grid tile; controls shape and size of cells in the grid. */
+    private GridTile            gridTile;
     
     /** The location (URL) of the date to parse and display in the grid. */
     private URL                 gridURL;
