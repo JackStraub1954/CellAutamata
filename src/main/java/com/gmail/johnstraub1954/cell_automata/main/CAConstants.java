@@ -174,17 +174,20 @@ public class CAConstants
      * or from the command line.
      */
     public static final String  GRID_MAP_PN          = "gridMap";
-    public static final String  GRID_QUAD_TILE_PN   = "gridQuadTile";
-    public static final String  GRID_QUAD_TILE_DV   = "QuadTile";
-    public static final String  GRID_HEX_TILE_PN    = "gridHexTile";
-    public static final String  GRID_HEX_TILE_DV    = "HexTile";
     /**
      * The GridTile that controls things like the shape of a cell, length of 
      * side of cell, and pixel-to-cell mappings. E.g., QuadTile, HexTile.
+     * The value of the property is a string of comma-separated-values
+     * (CSV), constructed via the conventions dictated by RFC 4180.
+     * The first value is the canonical name of a class
+     * that implements GridTile. Subsequent values are class-dependent,
+     * and represent arguments passed to GridTile.ofValues(String...).
+     * @see GridTile#ofValues.
      */
     public static final String  GRID_TILE_PN        = "gridTile";
     /** GridTile default value. */
-    public static final String  GRID_TILE_DV        = "QuadTile";
+    public static final String  GRID_TILE_DV        =  
+        "com.gmail.johnstraub1954.cell_automata.geometry.GridTile";
     
     ////////////////////////////////////////
     //

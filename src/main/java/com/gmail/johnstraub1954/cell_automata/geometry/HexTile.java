@@ -7,6 +7,8 @@ import java.awt.Dimension;
 import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
 
+import com.gmail.johnstraub1954.cell_automata.main.CAException;
+
 import Jama.Matrix;
 
 /**
@@ -50,12 +52,30 @@ import Jama.Matrix;
  * @see <a href="https://math.nist.gov/javanumerics/jama/">Jama</a>
  *      
  */
-/**
- * @author java1
- *
- */
 public class HexTile implements GridTile
 {
+    /** 
+     * The prefix for any error message created by
+     * the <em>ofValues</em> method.
+     * @see #ofValues(String...)
+     */
+    private static final String     ofValuesErrorPrefix     =
+        "HexLayout.ofValues error: ";
+    /** 
+     * The default layout used by
+     * the <em>ofValues</em> method.
+     * @see #ofValues(String...)
+     */
+    private static final HexLayout  ofValuesLayoutDefault   = 
+        HexLayout.ODD_Q;
+    /**
+     * The default value for the length of the side
+     * of the HexTile created by 
+     * the <em>ofValues</em> method.
+     * @see #ofValues(String...)
+     */
+    private static final double     ofValuesSideDefault     = 10;
+    
     /**
      * Constant indicating a hexagon with a vertical layout.
      * Such a hexagon has a vertex pointing West,
@@ -254,6 +274,39 @@ public class HexTile implements GridTile
     }
     
     /**
+     * Construct a HexTile using a sequence of String arguments.
+     * The sequence may consist of 0, 1 or 2 arguments,
+     * representing the HexLayout and length of side
+     * of the HexTile.
+     * If there are two arguments, 
+     * the layout argument must be first;
+     * if there are fewer than two arguments
+     * the layout will default.
+     * If there are more than 0 arguments
+     * the side is expected to be last,
+     * and is expected to be a value decimal value.
+     * If there are 0 arguments
+     * the length of the side will default.
+     * 
+     * @return  a HexTile constructed from the given arguments
+     * 
+     * @throws  CAException if the list of values is invalid
+     * 
+     * @see #ofValuesLayoutDefault
+     * @see #ofValuesSideDefault
+     */
+    @Override
+    public HexTile ofValues( String...strings )
+    {
+        validateOfValuesArgCount( strings );
+        HexLayout   layout  = parseOfValuesLayoutArg();
+        double      side    = parseOfValuesSideArg();
+        HexTile     tile    = ofSide( side, layout );
+        
+        return tile;
+    }
+    
+    /**
      * Get a path to draw this hexagon at the given axial coordinates.
      * 
      * @param hex   the given axial coordinates
@@ -392,4 +445,132 @@ public class HexTile implements GridTile
 		HexNeighborhood   neighborhood	= new HexNeighborhood( self, layout );
 		return neighborhood;
 	}
+	
+	/**
+     * Given an array of arguments passed to ofValues,
+     * validate the number of arguments passed.
+     * 
+     * @param strings   the given array of arguments
+     * 
+	 * @throws CAException
+	 *         if the number of arguments exceeds 2
+	 * 
+	 * @see #ofValues(String...)
+	 */
+	private void validateOfValuesArgCount( String...strings )
+	    throws CAException
+	{
+        int         argc    = strings.length;
+        if ( argc > 2 )
+        {
+            StringBuilder   bldr    = new StringBuilder();
+            bldr.append( ofValuesErrorPrefix )
+                .append( "number of arguments (" )
+                .append( argc )
+                .append( ") exceeds maximum of 2" );
+            throw new CAException( bldr.toString() );
+        }
+	}
+	
+	/**
+	 * Given an array of arguments passed to ofValues,
+	 * determines the HexLayout to be used to construct
+	 * a HexTile. 
+	 * The layout is expected to be the first argument
+	 * in an array of at least two arguments.
+	 * If there are fewer than two arguments
+	 * null is returned.
+	 * 
+	 * @param strings  the given array of arguments
+	 * 
+	 * @return the parsed HexLayout value, 
+	 *         or null if HexLayout is not present
+	 *         
+	 * @throws CAException
+	 *         if specified hexLayout string
+	 *         cannot be converted to
+	 *         a HexLayout constant
+	 *         
+     * 
+     * @see #ofValues(String...)
+	 * @see #ofValuesLayoutDefault
+	 */
+	private HexLayout parseOfValuesLayoutArg( String...strings )
+	    throws CAException
+	{
+	    HexLayout  layout      = ofValuesLayoutDefault;
+	    String     layoutArg   = null;
+	    if ( strings.length > 1 )
+	    {
+	        layoutArg = strings[0];
+	        try
+	        {
+	            layout = HexLayout.valueOf( layoutArg );
+	        }
+	        catch ( IllegalArgumentException exc )
+	        {
+	            StringBuilder  bldr    = new StringBuilder();
+                bldr.append( ofValuesErrorPrefix )
+                    .append( "number of HexLayout \"" )
+                    .append( layoutArg )
+                    .append( "\"" );
+                throw new CAException( bldr.toString() );
+	        }
+	    }
+	    return layout;
+	}
+    
+    /**
+     * Given an array of arguments passed to ofValues,
+     * determines the length of the side to be used
+     * to construct a HexTile. 
+     * If the number of arguments is 1,
+     * the side length is expected to be
+     * the first argument.
+     * If the number of arguments is greater than 1
+     * the side length is expected to be
+     * the second argument.
+     * If the number of arguments is less than 1
+     * <em>ofValuesSideDefault</em> is returned.
+     * 
+     * @param strings  the given array of arguments
+     * 
+     * @return the parsed side value, 
+     *         or <em>ofValuesSideDefault</em>
+     *         if side argument is not present
+     *         
+     * @throws CAException
+     *         if specified length of side is invalid
+     *         
+     * 
+     * @see #ofValues(String...)
+     * @see #ofValuesSideDefault
+     */
+    private double parseOfValuesSideArg( String...strings )
+        throws CAException
+    {
+        double  side    = ofValuesSideDefault;
+        String  sideArg = null;
+        if ( strings.length > 1 )
+        {
+            if ( strings.length == 1 )
+                sideArg = strings[0];
+            else
+                sideArg = strings[1];
+            try
+            {
+                side = Double.parseDouble( sideArg );
+            }
+            catch ( IllegalArgumentException exc )
+            {
+                StringBuilder  bldr    = new StringBuilder();
+                bldr.append( ofValuesErrorPrefix )
+                    .append( "length of side. \"" )
+                    .append( sideArg )
+                    .append( "\", is invalid" );
+                throw new CAException( bldr.toString() );
+            }
+        }
+        return side;
+    }
 }
