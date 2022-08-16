@@ -187,7 +187,7 @@ public class CAConstants
     public static final String  GRID_TILE_PN        = "gridTile";
     /** GridTile default value. */
     public static final String  GRID_TILE_DV        =  
-        "com.gmail.johnstraub1954.cell_automata.geometry.GridTile";
+        "com.gmail.johnstraub1954.cell_automata.geometry.QuadTile 15";
     
     ////////////////////////////////////////
     //

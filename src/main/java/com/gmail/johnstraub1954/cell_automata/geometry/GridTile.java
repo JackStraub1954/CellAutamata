@@ -82,5 +82,28 @@ public interface GridTile
      */
     public Offset getSelected( int xco, int yco );
     
+    /**
+     * Creates a new GridTile from configuration options.
+     * This method is intended to facilitate tile configuration
+     * from a text source,
+     * such as a configuration file,
+     * the command line
+     * or an environment variable.
+     * The first argument of the list
+     * must be present, 
+     * and designates the canonical name
+     * of a class the implements GridTile.
+     * Additional arguments are dependent 
+     * on the target class.
+     * Example: <pre>
+     *     com.gmail.johnstraub1954.cell_automata.geometry.HexTile \
+     *     ODD_R 20</pre>
+     * Specifies a HexTile with an ODD_R layout and a side of 20.
+     * 
+     * @param strings   list of arguments
+     * 
+     * @return  a GridTile object
+     *          constructed according to the above protocol 
+     */
     public GridTile ofValues( String ...strings );
 }

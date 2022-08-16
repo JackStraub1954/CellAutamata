@@ -57,13 +57,21 @@ import static com.gmail.johnstraub1954.cell_automata.main.CAConstants.MISC_PATTE
 
 import java.awt.Color;
 import java.awt.Point;
+import java.io.IOException;
+import java.io.StringReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 import java.util.function.Consumer;
+
+import com.gmail.johnstraub1954.cell_automata.geometry.GridTile;
+import com.gmail.johnstraub1954.cell_automata.geometry.QuadTile;
+import com.opencsv.CSVReader;
+import com.opencsv.exceptions.CsvValidationException;
 
 /**
  * Property manager for this facility.
@@ -309,6 +317,55 @@ public class CAProperties extends Properties
         boolean keepCentered    = 
             getBoolean( GRID_KEEP_CENTERED_PN, GRID_KEEP_CENTERED_DV );
         return keepCentered;
+    }
+    
+    public GridTile getGridTile()
+    {
+        String      args    = CAConstants.GRID_TILE_DV;
+        GridTile    tile    = null;
+        String[]    tokens  = null;
+        try ( StringReader strReader = new StringReader( args );
+              CSVReader    csvReader = new CSVReader( strReader );
+        )
+        {
+            tokens = csvReader.readNext();
+            if ( tokens == null || tokens.length == 0 )
+            {
+                String  message =
+                    "Property " 
+                    + CAConstants.GRID_TILE_PN 
+                    + " not found";
+                throw new CAException( message );
+            }
+            String      className   = tokens[0];
+            String[]    opts        = Arrays.copyOf( tokens, 1 );
+        }
+        catch ( CsvValidationException exc )
+        {
+            System.err.println( "CSV validation error" );
+            exc.printStackTrace();
+        }
+        catch ( IOException exc )
+        {
+            System.err.println( "Unexpected IO Exception" );
+            exc.printStackTrace();
+        }
+        catch ( CAException exc )
+        {
+            System.err.println( "GridTile instantiation error" );
+            exc.printStackTrace();
+        }
+        
+        if ( tile == null )
+        {
+            String  message =
+                "Failed to instantiation GridTile from properties. "
+                + "Creating default QuadTile";
+            System.err.println( message );
+            tile = QuadTile.ofSide( 15 );
+        }
+        
+        return tile;
     }
     
     /**
